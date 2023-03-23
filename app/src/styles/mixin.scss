@@ -1,0 +1,18 @@
+
+
+@mixin flexCenter($direction, $backgound) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: $direction;
+    background: $backgound;
+  }
+
+  @mixin flexStart($direction, $backgound) {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    flex-direction: $direction;
+    background: $backgound;
+  }
+  

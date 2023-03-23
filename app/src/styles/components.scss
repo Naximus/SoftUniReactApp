@@ -1,0 +1,152 @@
+@import './variables.scss';
+@import './mixin.scss';
+
+
+@mixin outline-text-btn() {
+    @include flexCenter(row, null);
+    padding: 10px;
+    margin-top: $margin-between-main-group-elements;
+    margin-bottom: $margin-between-main-group-elements;
+
+    background: none;
+    border: 1px solid $btn-default-color;
+    color: $btn-default-color;
+    text-transform: uppercase;
+  }
+  
+
+.btn-only-text-outline-small {
+    @include outline-text-btn();
+    min-width: 12rem;
+    height: 4rem;
+    border-radius: 2rem;
+    letter-spacing: 0.1rem;
+
+    &:hover {
+        background: $btn-confirmation-agree;
+        border: 0.1rem solid $btn-confirmation-agree;
+    }
+  }
+
+
+.mobile-pages {
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+.main-box {
+    width: 100%;
+    border-radius: 3rem;
+    padding: 1rem;
+    box-sizing: border-box;
+}
+
+
+.navigation {
+    @include flexCenter(row, $secondary-box-color);
+    width: 100%;
+    height: 50px;
+    border-radius: 5rem;
+    box-sizing: border-box;
+    justify-content: space-around;
+}
+
+.btn-icons {
+    display: inline-block;
+    width: 5rem;
+    height: 5rem;
+    background-size: cover;
+}
+.inline-icons {
+    display: inline-block;
+    width: 4rem;
+    height: 4rem;
+    background-size: cover;
+}
+.row-icons {
+    width: 5rem;
+    height: 5rem;
+    background-size: cover;
+}
+.icon-user {
+    background-image: url(../assets/icons/icon_user.svg);
+}
+.icon-user-white {
+    background-image: url(../assets/icons/icon_user_white.svg);
+}
+.icon-user-cicrle-white {
+    background-image: url(../assets/icons/icon_user_cicrle.svg);
+}
+
+.icon-info {
+    background-image: url(../assets/icons/icon_Info.svg);
+}
+.icon-info-active {
+    background-image: url(../assets/icons/icon_Info_active.svg);
+}
+.icon-card {
+    background-image: url(../assets/icons/icon_card.svg);
+}
+.icon-card-active {
+    background-image: url(../assets/icons/icon_card_active.svg);
+}
+.icon-desk {
+    background-image: url(../assets/icons/icon_desk.svg);
+}
+.icon-desk-active {
+    background-image: url(../assets/icons/icon_desk_active.svg);
+}
+.icon-phone {
+    background-image: url(../assets/icons/icon_phone.svg);
+}
+.icon-email {
+    background-image: url(../assets/icons/icon_email.svg);
+}
+.icon-calendar-add {
+    background-image: url(../assets/icons/icon_calendar_add.svg);
+}
+.icon-calendar-date {
+    background-image: url(../assets/icons/icon_calendar_date.svg);
+}
+.icon-lock-white {
+    background-image: url(../assets/icons/icon_lock_white.svg);
+}
+
+.icon-add-ring {
+    background-image: url(../assets/icons/icon_add_ring.svg);
+}
+
+.icon-save {
+    background-image: url(../assets/icons/icon_save.svg);
+}
+.icon-trash {
+    background-image: url(../assets/icons/icon_trash.svg);
+}
+
+
+.alfa-logo-no-text {
+    background-image: url(../assets/icons/alfa_logo_no_text.svg);
+}
+.alfa-logo-no-text {
+    background-image: url(../assets/icons/alfa_logo_no_text.svg);
+}
+
+
+.card-circle {
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 3rem;
+}
+.paid-card {
+    background-color: #3CE500;
+}
+.unpaid-card {
+    background-color: #FF9900;
+}
+
+
+.personal-card {
+    background: linear-gradient(90.27deg, #1A2980 3.4%, rgba(38, 208, 206, 0.58) 180.34%);
+ }
+ .group-card {
+   background: linear-gradient(90.27deg, #CE1E69 3.4%, #284392 83.57%);
+ }
