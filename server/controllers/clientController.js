@@ -223,7 +223,7 @@ router.put("/:id/target", async (req, res) => {
       throw new Error("Target must be defined.");
     }
 
-    const result = await userService.updateName(id, target, "client");
+    const result = await userService.updateTarget(id, target, "client");
 
     res.status(201).json(result);
   } catch (error) {
@@ -231,7 +231,7 @@ router.put("/:id/target", async (req, res) => {
   }
 });
 
-router.put("/:id/food-regime", async (req, res) => {
+router.put("/:id/foodRegime", async (req, res) => {
   try {
     const id = req.params.id;
     const { foodRegime } = req.body;
