@@ -12,7 +12,6 @@ export const CardDetails = (
     onSaveLocal
 }
 ) => {
-
     const { appToken, setAppToken } = useContext(AppTokenContext);
     const {onSaveCard, clientCreator, clientId, setAddCard} = useContext(CreateCardConext);
 

@@ -78,19 +78,20 @@ export const AddSubscriptionCard = () => {
         <>
         {/* { selectedCard && <CardDetails card={selectedCard} onDeleteCart = {onDeleteCart} onSaveCard = {onSaveCard} appToken={appToken} clientId={clientId} onSaveLocal={onSaveLocal}/>} */}
         { selectedCard && <CardDetails card={selectedCard} onDeleteCart = {onDeleteCart} onSaveLocal={onSaveLocal}/>}
-        <div className='client-cards-holder'>
-            <h1>Избери карта</h1>
-            <div id='personalTen'  className='choose-card personal-card' onClick={onChoseCard}>
-                <div id='personalTen' className='row-icons  icon-user-white'></div>
-                <h2 id='personalTen'>ПЕРСОНАЛНА 10</h2>
-                <div id='personalTen' className='row-icons icon-add-ring'></div>
+            <div className='client-cards-holder'>
+                <h1>Избери карта</h1>
+                <div id='personalTen'  className='choose-card personal-card' onClick={onChoseCard}>
+                    <div id='personalTen' className='row-icons  icon-user-white'></div>
+                    <h2 id='personalTen'>ПЕРСОНАЛНА 10</h2>
+                    <div id='personalTen' className='row-icons icon-add-ring'></div>
+                </div>
+                <div id='groupTen' className='choose-card group-card' onClick={onChoseCard}>
+                    <div id='groupTen' className='row-icons  icon-user-white'></div>
+                    <h2 id='groupTen'>ГРУПОВА 10</h2>
+                    <div id='groupTen' className='row-icons icon-add-ring'></div>
+                </div>
             </div>
-            <div id='groupTen' className='choose-card group-card' onClick={onChoseCard}>
-                <div id='groupTen' className='row-icons  icon-user-white'></div>
-                <h2 id='groupTen'>ГРУПОВА 10</h2>
-                <div id='groupTen' className='row-icons icon-add-ring'></div>
-            </div>
-        </div>
+
         </>
     )
 }

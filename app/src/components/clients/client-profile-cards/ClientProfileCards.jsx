@@ -85,17 +85,88 @@ const ClientProfileCards = () => {
 
     // --------------------------------------------
 
+        const onUpdateCard = async (_id, updatedCard) => {
+            // TODO Send data to API and redirect to /client-profile/cards
+           
+            
+            
+            const result = await fetch(`${BASE_URL}/clients/${clientId}/cards/${_id}`, {
+                method: "PUT",
+                headers: { "content-type": "application/json", "X-Authorization" :  appToken},
+                mode: "cors",
+                body: JSON.stringify({
+                    _id: updatedCard._id,
+                    start: updatedCard.start,
+                    end: updatedCard.end,
+                    trainingsLeft: updatedCard.trainingsLeft,
+                    paid: updatedCard.paid
+                }),
+              })
+                .then((response) => {
+                  if (!response.ok) throw new Error(response.status);
+                  else return response.json();
+                })
+                .then((result) => {
+                  const cards = clientCards;
+                  const updatedCards = cards.map((card) => {
+                    if (card._id === result._id) {
+                      // Replace the matching card with the updated result
+                      return result;
+                    } else {
+                      return card;
+                    }
+                  });
+                  setClientCards(updatedCards);
+                  navigate(`/clients/${clientId}`);
+                })
+                .catch((error) => {
+                  console.log("error: " + error);
+                  setError("User could not be authenticated");
+                });
+    
+          }
+    
+        // --------------------------------------------
+          const deleteSelectedCard = async (_id) => {
+          
+
+                const result = await fetch(`${BASE_URL}/clients/${clientId}/cards/${_id}`, {
+                method: "DELETE",
+                headers: { "content-type": "application/json", "X-Authorization" :  appToken},
+                mode: "cors",
+                body: JSON.stringify({
+                }),
+              })
+                .then((response) => {
+                  if (!response.ok) throw new Error(response.status);
+                  else return response.json();
+                })
+                .then((result) => {
+                  const newData = clientCards;
+                  const state = newData.filter((x) => x._id !== result._id);
+                  setClientCards(state)
+                  navigate(`/clients/${clientId}`);
+                })
+                .catch((error) => {
+                  console.log("error: " + error);
+                  setError("User could not be authenticated");
+                });
+    
+          }
+
+
       const cardContexProps = {
           onSaveCard,
           clientCreator,
           clientId,
-          setAddCard
+          setAddCard,
+          onUpdateCard,
+          deleteSelectedCard
       }
-
     return(
         <>
        
-        
+       <CreateCardConext.Provider value = {cardContexProps} >
         <div className="client-cards-holder">
             {clientCards.map(x => 
                 <SubscriptionCards key= {x._id} {...x} /> 
@@ -106,11 +177,11 @@ const ClientProfileCards = () => {
             {/* <h1>Cards</h1> */}
             
             <button className="btn-only-text-outline-small" onClick = {showAddCardsMenu}>Добави карта</button>
-              <CreateCardConext.Provider value = {cardContexProps} >
-                {/* { addCard && <AddSubscriptionCard clientId={clientId} appToken={appToken} clientCreator={clientCreator} onSaveCard={onSaveCard} />} */}
+              
                 { addCard && <AddSubscriptionCard />}
-              </CreateCardConext.Provider>
+              
         </div>
+        </CreateCardConext.Provider>
         </>
     )
 }

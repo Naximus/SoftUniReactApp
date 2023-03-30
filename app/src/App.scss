@@ -1,0 +1,448 @@
+@import './styles/variables.scss';
+@import './styles/mixin.scss';
+@import './styles/components.scss';
+
+html {
+  font-size: 10px;
+}
+.App {
+  text-align: center;
+  background: $main-backgound-color;
+  color: white;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+body {
+  min-height: 100vh;
+  background: #2B2A39;
+}
+
+
+// Login Style
+.login {
+  @include flexCenter(column, $main-backgound-color);
+  
+
+  .login-form {
+    @include flexCenter(column, $main-box-color);
+    
+    animation: white 5s infinite;
+
+    .login-form-alfa-logo {
+      width: 12rem;
+      margin-bottom: $margin-between-main-group-elements;
+      margin-top: $margin-between-main-group-elements;
+    }
+    .input-box{
+      @include flexCenter(column, $secondary-box-color);
+      width: 100%;
+      margin: 1rem;
+      border-radius: 1.5rem;
+      
+      backdrop-filter: blur(17.5px);
+
+      .input-box-title {
+        font-size: 2rem;
+        margin-top: 1rem;
+      }
+
+      .input-holder{
+        width: 100%;
+        margin-top: 1rem;
+        margin-bottom: 2rem;
+        padding-left: 1rem;
+        padding-right: 1rem;
+        box-sizing: border-box;
+        .login-form-icons {
+          position: absolute;
+          height: 3rem;
+          margin-left: 1rem;
+        }
+        
+        input {
+          width: 100%;
+          height: 3rem;
+          border-radius: 1.5rem;
+          text-align: center;
+          outline: none;
+          border: none;
+          &::placeholder {
+            font-size: $font-size-small;
+          }
+        }
+      }
+    }
+
+
+    @keyframes white {
+      0%, 100% {
+        box-shadow: 0 0 2em hsl(231deg 62% 94%) }
+    
+      50% {
+        box-shadow: 0 0 2em hsl(231, 7%, 61%) } 
+      }
+  }
+}
+
+button { cursor: pointer; }
+
+
+
+// Client Profile
+.client-profile {
+  @include flexStart(column, null);
+  
+  .client-header {
+    @include flexCenter(row, null);
+    gap: 1rem;
+    margin-top: $margin-between-main-group-elements;
+    margin-bottom: $margin-between-main-group-elements;
+    .client-avatar {
+      box-sizing: border-box;
+      overflow: hidden;
+      width: 16rem;
+      height: 16rem;
+      border-radius: 16rem;
+      
+      img{
+        width: 100%;
+      }
+       input[type="file"] {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 100%;
+        height: 100%;
+        font-size: 100px;
+        text-align: right;
+        filter: alpha(opacity=0);
+        opacity: 0;
+        outline: none;
+        cursor: inherit;
+        display: block;
+      }
+    }
+    .client-name {
+      font-size: $font-size-between;
+    }
+  }
+  .client-profile-info {
+    width: 100%;
+    overflow: scroll;
+    overflow: overlay;
+    ul {
+      @include flexStart(column, null);
+      li {
+        @include flexStart(row, null);
+        width: 100%;
+        margin-bottom: 0.5rem;
+        p {
+          font-size: $font-size-between;
+          margin-left: 2rem;
+          margin-bottom: 0px;
+          margin-top: 0px;
+        }
+      }
+      
+    }
+    .client-target {
+      @include flexCenter(column, $secondary-box-color);
+      margin-bottom: 1rem;
+      h3{
+        font-size: $font-size-medium;
+      }
+      p {
+        font-size: $font-size-between;
+        margin-top: 0;
+      }
+    }
+  }
+  .input-holder{
+    @include flexCenter(row, null);
+    width: 100%;
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    box-sizing: border-box;
+    
+    
+    input {
+      width: 100%;
+      height: 3rem;
+      border-radius: 1.5rem;
+      margin-left: 2rem;
+      text-align: center;
+      outline: none;
+      border: none;
+      background-color: $secondary-box-color;
+      color: white;
+      &::placeholder {
+        font-size: $font-size-small;
+        color: white;
+        opacity: 0.4;
+      }
+    }
+  }
+}
+
+// client cards
+
+// .client-cards-holder {
+//   @include flexCenter(column, null);
+//   margin-top: 2rem;
+  
+// }
+// .personal-card {
+//    background: linear-gradient(90.27deg, #1A2980 3.4%, rgba(38, 208, 206, 0.58) 180.34%);
+// }
+// .group-card {
+//   background: linear-gradient(90.27deg, #CE1E69 3.4%, #284392 83.57%);
+// }
+// .client-card {
+//   width: 29rem;
+//   box-sizing: border-box;
+//   border-radius: 2rem;
+//   margin-bottom: 1rem;
+//   padding: 1rem;
+
+//   .card-top-part {
+//     @include flexCenter(row, null);
+//     justify-content: space-between;
+//     .card-logo {
+//       width: 5rem;
+//       height: 5rem;
+//     }
+//     .card-type{
+//       font-size: $font-size-medium;
+//       margin-top: 0;
+//       margin-bottom: 0;
+//     }
+//   }
+//   .card-middle-part {
+//     @include flexCenter(row, null);
+//     justify-content: space-between;
+//   }
+//   h4 {
+//     font-size: $font-size-normal;
+//     margin: 0;
+//     line-height: 1.2;
+//   }
+//   .client-visits {
+    
+//     h3 {
+//       font-size: $font-size-normal;
+//       margin: 0
+//     }
+
+//     .data-mini {
+//       @include flexCenter(row, null);
+//       justify-content: space-evenly;
+//       flex-wrap: wrap;
+//       p {
+//         font-size: $font-size-small;
+//         margin: 0;
+//       }
+//     }
+    
+//   }
+
+  
+// }
+
+
+.client-cards-holder {
+  @include flexCenter(column, null);
+  margin-top: 2rem;
+  
+}
+
+.client-card {
+  width: 29rem;
+  box-sizing: border-box;
+  border-radius: 2rem;
+  margin-bottom: 1rem;
+  padding: 1rem;
+
+  .card-top-part {
+    @include flexCenter(row, null);
+    justify-content: space-between;
+    .card-logo {
+      width: 5rem;
+      height: 5rem;
+    }
+    .card-type{
+      font-size: $font-size-medium;
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+  }
+  .card-middle-part {
+    @include flexCenter(row, null);
+    justify-content: space-between;
+  }
+  h4 {
+    font-size: $font-size-normal;
+    margin: 0;
+    line-height: 1.2;
+  }
+  .client-visits {
+    @include flexCenter(row, null);
+    justify-content: space-between;
+    margin-top: 2rem;
+    h3 {
+      font-size: $font-size-normal;
+      margin: 0
+    }
+    .card-visits {
+      max-width: 15rem;
+    }
+    .data-mini {
+      @include flexCenter(row, null);
+      justify-content: space-evenly;
+      flex-wrap: wrap;
+      p {
+        font-size: $font-size-small;
+        margin: 0;
+      }
+    }
+    
+  }
+
+  
+}
+
+.choose-card {
+  @include flexCenter(row, null);
+
+  width: 29rem;
+  border-radius: 3rem;
+  margin-top: 1rem;
+  justify-content: space-between;
+  cursor: pointer;
+}
+
+.react-datepicker__input-container {
+  margin-top: 0.5rem;
+  input {
+    width: 8rem;
+    height: 3rem;
+    background: $secondary-box-color;
+    border-radius: 3rem;
+    color: white;
+    text-align: center;
+  }
+  
+}
+
+.card-btn {
+  @include flexCenter(row, null);
+  justify-content: space-between;
+  margin-top: 2rem;
+}
+
+.create-card-overlay {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(8px);
+  /* Note: backdrop-filter has minimal browser support */
+
+  .client-card {
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 20vh;
+  }
+}
+
+
+
+// Clients Dashboard
+.clients-holder {
+  @include flexCenter(column, $main-backgound-color);
+  justify-content: flex-start;
+  width: 100%;
+  // height: 100vh;
+  .search-bar {
+    input {
+      width: 100%;
+      height: 3rem;
+      border-radius: 1.5rem;
+      text-align: center;
+      outline: none;
+      border: none;
+      &::placeholder {
+        font-size: $font-size-small;
+      }
+    }
+  }
+  .clients {
+    @include flexCenter(row, null);
+    margin-top: $margin-between-main-group-elements;
+    flex-wrap: wrap;
+    .client-holder {
+      width: 29rem;
+      height: 22rem;
+      
+      background-color: $secondary-box-color;
+      border-radius: 2rem;
+      margin-left: $margin-between-main-group-elements;
+      margin-top: $margin-between-main-group-elements;
+    }
+  }
+}
+
+
+
+.search-bar {
+  width: 30rem;
+  height: 3rem;
+  border-radius: 1.5rem;
+  margin-left: 2rem;
+  text-align: center;
+  outline: none;
+  border: none;
+  color: white;
+
+  input {
+    background-color: rgba(156, 156, 156, 0.3);
+    color: white;
+  }
+}

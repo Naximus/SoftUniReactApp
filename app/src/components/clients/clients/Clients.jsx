@@ -8,7 +8,12 @@ import { AppTokenContext } from "../../../contexts/AppTokenContext";
 const Clients = () => {
   const [clients, setClients] = useState([]);
   const [error, setError] = useState(undefined);
-  const { appToken, setAppToken } = useContext(AppTokenContext)
+  const { appToken, setAppToken } = useContext(AppTokenContext);
+
+  // serach
+  const [query, setQuery] = useState('');
+  // =============
+
 
   useEffect(() => {
     fetch(`${BASE_URL}/clients`, {
@@ -30,21 +35,50 @@ const Clients = () => {
       });
   }, []);
 
+
+  // serach
+  const searchKey = 'name';
+    const handleInputChange = (event) => {
+      setQuery(event.target.value);
+    };
+
+    const filteredData = clients.filter((item) => {
+      // Filter the data based on the search query and searchKey
+      return item[searchKey].toLowerCase().includes(query.toLowerCase());
+    });
+
+  // =============
+
   return (
+    <>
+
     <div className="clients-holder">
+      <div className="search-bar">
+      <input 
+        type="text"
+        placeholder="Search..."
+        value={query}
+        onChange={handleInputChange}
+      />
+      </div>
+      <div className="clients">
+        {filteredData.map((client) => (
+          < SingleClient key={client._id} client= {client} />
+        ))}
+      </div>
+    </div>
+
+    {/* <div className="clients-holder">
       <div className="search-bar">
         <input type="text" />
       </div>
       <div className="clients">
         {clients.map(client => (
           < SingleClient key={client._id} client= {client} />
-          // <div className="client-holder" key={client._id}>
-          //   {/* <p>{client.username} - {client.name} - active:{client.active.toString()}</p> */}
-          //   {/* <h3>{client.name}</h3> */}
-          // </div>
         ))}
       </div>
-    </div>
+    </div> */}
+    </>
   );
 };
 

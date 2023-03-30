@@ -6,12 +6,12 @@ TODO: Add logger middleware
 
 #1 - Initial Setup
 TODO: FIX error when authorisation token is sent in Header
-+ POST 	- /settings/admin - {"email": "nacho@abv.bg", "password": "123123" } <- Create Admin
-+ PUT 	- /settings/admin -> {"email": "nacho@abv.bg", "password": "123123" } <- Change Admin with the user who has the specified email. If no user with that email is found create a new user with that email and password and set him as Admin.
++ POST 	- /settings/admin - {"email": "georgi.karchev@gmail.com", "password": "123123" } <- Create Admin
++ PUT 	- /settings/admin -> {"email": "georgi.karchev@gmail.com", "password": "123123" } <- Change Admin with the user who has the specified email. If no user with that email is found create a new user with that email and password and set him as Admin.
 
 
 #2 - Authentication
-+ POST 	- /auth/login - {"usernameOrEmail": "nacho@abv.bg", "password": "123123" } 
++ POST 	- /auth/login - {"usernameOrEmail": "georgi.karchev@gmail.com", "password": "123123" } 
 -> returns token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDBhZTRhNWI5ZGQxYzg3N2EzODI3M2UiLCJlbWFpbCI6Imdlb3JnaS5rYXJjaGV2QGdtYWlsLmNvbSIsInVzZXJuYW1lIjoiQWRtaW4iLCJleHBpcmVzIjoiMjAyMy0wNC0xMFQwNzowNzo1My45OTFaIiwiaWF0IjoxNjc4NDM1NjczfQ.IzDvfbNP9ru1Oreus3o-wlO0pj0d1QaQRiDrH_sM6No
 
 
@@ -104,14 +104,14 @@ http://localhost:3030/cards?owner=6412ded1ee8aa118a56a1cc9
 
 - POST URL /users/add/admin
 {
-	"email": "nacho@abv.bg",
+	"email": "georgi.karchev@gmail.com",
 	"password": "123123",
 }
 
 
 - POST URL / login
 {
-	"userNameOrEmail": "nacho@abv.bg",
+	"userNameOrEmail": "georgi.karchev@gmail.com",
 	"password": "123123",
 }
 

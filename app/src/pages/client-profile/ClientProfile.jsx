@@ -14,7 +14,7 @@ const ClientProfile = () => {
     const { currentClient, setCurrentUser } = useContext(ClientContext);
     const [error, setError] = useState(undefined);
     const [isLoading, setIsLoading] = useState(false);
-    const [activeTab, setActiveTab] = useState("info");
+    const [activeTab, setActiveTab] = useState("cards");
 
 
     const userId = useParams(":userId");
