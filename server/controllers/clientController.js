@@ -524,7 +524,7 @@ router.put("/:id/cards/:cardId/status", async (req, res) => {
 router.post("/:id/cards/:cardId/trainings", async (req, res) => {
   try {
     const cardId = req.params.cardId;
-    const { trainer, date } = req.body;
+    const { trainer, date, trainingsLeft } = req.body;
 
     if (!trainer) {
       throw new Error("Trainer must be defined.");
@@ -533,8 +533,11 @@ router.post("/:id/cards/:cardId/trainings", async (req, res) => {
     if (!date) {
       throw new Error("Date must be defined.");
     }
+    if (!trainingsLeft) {
+      throw new Error("trainingsLeft must be defined.");
+    }
     // TODO check if user is guest && owner - otherwise NOT ALLOWED
-    const result = await cardService.createTraining(cardId, trainer, date);
+    const result = await cardService.createTraining(cardId, trainer, date, trainingsLeft);
 
     res.status(201).json(result);
   } catch (error) {
@@ -698,5 +701,56 @@ router.delete("/:id/measurements/:measurementId", async (req, res) => {
     res.status(404).json({ error: getErrorMessage(error) });
   }
 });
+
+
+
+
+
+
+router.put("/:id/cards/:cardId", async (req, res) => {
+  const owner = req.params.id;
+
+  try {
+    const { _id, start, end, trainingsLeft, paid } = req.body;
+
+    // if (!type || type == "") {
+    //   throw new Error("Card type must be defined");
+    // }
+
+    if (!start) {
+      throw new Error("Start date must be defined");
+    }
+
+    if (!end) {
+      throw new Error("End date must be defined");
+    }
+
+    if (!trainingsLeft) {
+      throw new Error("Trainings left date must be defined and bigger than 0");
+    }
+
+    // if (!owner) {
+    //   throw new Error("Card owner must be defined");
+    // }
+
+    // if (!trainer) {
+    //   throw new Error("Trainer must be defined");
+    // }
+
+    const result = await cardService.update({
+      _id,
+      start,
+      end,
+      trainingsLeft,
+      paid,
+    });
+
+    res.status(201).json(result);
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({ error: getErrorMessage(error) });
+  }
+});
+
 
 module.exports = router;

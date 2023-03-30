@@ -262,7 +262,7 @@ exports.updateStatus = async (id, active) => {
   return await card.save();
 };
 
-exports.createTraining = async (id, trainer, trainingDate) => {
+exports.createTraining = async (id, trainer, trainingDate, trainingsLeft) => {
   const card = await Card.findById(id);
 
   if (!card) {
@@ -282,6 +282,16 @@ exports.createTraining = async (id, trainer, trainingDate) => {
     throw new Error("Card is expired");
   }
 
+  if (card.trainingsLeft === trainingsLeft) {
+    throw new Error("Nothing to update.");
+  }
+
+  
+  // card.modified = new Date();
+  // return await card.save();
+
+
+  card.trainingsLeft = trainingsLeft;
   card.trainings.push({trainer, date});
   card.modified = new Date();
   return await card.save();
@@ -306,3 +316,53 @@ exports.deleteTraining = async (id, trainingId) => {
   card.modified = new Date();
   return await card.save();
 };
+
+
+
+
+exports.update = async (data) => {
+  const { _id, start, end, trainingsLeft, paid } =
+    data;
+  console.log(_id, start, end, trainingsLeft, paid);
+  // const existingClient = await User.findById(owner);
+  const card = await Card.findById(_id);
+
+  // if (!existingClient) {
+  //   throw new Error("Client does not exist");
+  // }
+
+  // const existingTrainer = await User.findById(trainer);
+
+  // if (!existingTrainer) {
+  //   throw new Error("Trainer does not exist");
+  // }
+
+  // const existingCreator = await User.findById(creator);
+
+  // if (!existingCreator) {
+  //   throw new Error("Creator does not exist");
+  // }
+
+  // if (
+  //   !existingCreator.type ||
+  //   (existingCreator.type !== "admin" &&
+  //     existingCreator.type !== "manager" &&
+  //     existingCreator.type !== "trainer")
+  // ) {
+  //   throw new Error(`Unauthorised operation for ${existingCreator.type}`);
+  // }
+
+  // const card = removeEmptyAttributes(data);
+
+  card.start = new Date(start);
+  card.end = new Date(end);
+  card.trainingsLeft = trainingsLeft;
+  card.paid = paid;
+  // card.active = true;
+  card.modified = new Date();
+
+  return await card.save();
+};
+
+
+
