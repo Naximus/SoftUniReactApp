@@ -195,6 +195,22 @@ router.put("/:id/name", async (req, res) => {
     res.status(400).json({ error: getErrorMessage(error) });
   }
 });
+router.put("/:id/image", async (req, res) => {
+  try {
+    const id = req.params.id;
+    const { image } = req.body;
+
+    if (!image) {
+      throw new Error("image must be defined.");
+    }
+
+    const result = await userService.updateImage(id, image, "client");
+
+    res.status(201).json(result);
+  } catch (error) {
+    res.status(400).json({ error: getErrorMessage(error) });
+  }
+});
 
 router.put("/:id/phone", async (req, res) => {
   try {

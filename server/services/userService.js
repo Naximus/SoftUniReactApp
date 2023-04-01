@@ -319,7 +319,7 @@ exports.updateName = async (userId, name, type) => {
 };
 
 exports.updateImage = async (userId, imageData, type) => {
-  const user = User.findById(userId);
+  const user = await User.findById(userId);
 
   if (!user) {
     throw new Error("User does not exist");
@@ -330,8 +330,9 @@ exports.updateImage = async (userId, imageData, type) => {
   }
 
   // FS save image
-
-  user.image = "new image url";
+  console.log(user.image);
+  user.image = imageData;
+  console.log(user.image);
   user.modified = new Date();
   return user.save();
 };
@@ -351,7 +352,7 @@ exports.updateImage = async (userId, imageData, type) => {
 
 exports.updatePhone = async (userId, phone, type) => {
   const user = await User.findById(userId);
-
+  console.log(user);
   if (!user) {
     throw new Error("User does not exist");
   }

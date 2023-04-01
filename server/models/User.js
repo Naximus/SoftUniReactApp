@@ -40,11 +40,12 @@ const userShema = new mongoose.Schema({
   },
   image: {
     type: String,
-    validate: {
-      validator: () => isURL(`{VALUE}`),
-      message: "{VALUE} is not a valid URL",
-      isAsync: false,
-    },
+    default: 'https://drive.google.com/uc?export=view&id=1-iyuyLkBLQdUjEiXC76u0yFA_Y3-QmRe',
+    // validate: {
+    //   validator: () => isURL(`{VALUE}`),
+    //   message: "{VALUE} is not a valid URL",
+    //   isAsync: false,
+    // },
   },
   name: {
     type: String,

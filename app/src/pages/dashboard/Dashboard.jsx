@@ -9,6 +9,8 @@ const Dashboard = ({appUser}) => {
     return appUser? 
         appUser.type === "manager"
             ? <DashboardManager user={appUser} />
+            : appUser.type === "admin"
+            ? <DashboardManager user={appUser} />
             : appUser.type === "trainer"
             ? <DashboardTrainer user={appUser} />
             : <ClientProfile user={appUser} />

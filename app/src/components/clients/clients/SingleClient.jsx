@@ -5,10 +5,10 @@ import { ClientContext } from "../../../contexts/ClientContext";
 
 
 
-
 const SingleClient = ({
     client
 }) => {
+
     const navigate = useNavigate();
 
     const { currentClient, setCurrentUser } = useContext(ClientContext);
