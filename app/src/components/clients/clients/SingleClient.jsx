@@ -22,8 +22,11 @@ const SingleClient = ({
     return (
         
         <div className="client-holder">
-            <h1>{client.name}</h1>
-            <p>active:{client.active.toString()}</p> 
+            <div className="name-img-holder">
+                <img src={client.image} alt="avatar" />
+                <h1>{client.name}</h1>
+            </div>
+            {/* <p>active:{client.active.toString()}</p>  */}
 
             <button className="btn-only-text-outline-small" onClick={onClickUser}>Details</button>
             

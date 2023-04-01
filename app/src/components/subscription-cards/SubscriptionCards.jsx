@@ -156,7 +156,7 @@ export const SubscriptionCards = ({
                 </div>
             </div>
             <div className="client-visits">
-                <div className="row-icons icon-expand-down" onClick={handleClick}> 
+                <div className="row-icons icon-edit" onClick={handleClick}> 
                 </div>  
                 
                 <div className="card-visits">

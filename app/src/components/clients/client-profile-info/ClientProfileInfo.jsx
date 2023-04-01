@@ -17,19 +17,20 @@ const ClientProfileInfo = () => {
     const [isEditingRegime, setIsRegimeEditing] = useState(false);
 
     const [editedFields, setEditedFields] = useState([]);
-    
+    const [isChaned, setIsChanged] = useState(false);
 
     const clientId = currentClient._id;
 
-    const handleEdit = (key, value) => {
-      setEditedInfo({
-        ...editedInfo,
-        [key]: value
-      });
-      setEditedFields((prevFields) => [...prevFields, key]);
-    };
+    // const handleEdit = (key, value) => {
+    //   setEditedInfo({
+    //     ...editedInfo,
+    //     [key]: value
+    //   });
+    //   setEditedFields((prevFields) => [...prevFields, key]);
+    // };
   
     const handleInputChange = (event) => {
+      setIsChanged(true);
       const { name, value } = event.target;
       setEditedInfo({
         ...editedInfo,
@@ -39,11 +40,14 @@ const ClientProfileInfo = () => {
     };
   
     const handleSave = async () => {
-      console.log(editedInfo);
       // Send only edited fields to the backend
+      if (isChaned) {
+        
+      
       const editedData = {};
       editedFields.forEach((field) => {
         editedData[field] = editedInfo[field];
+        console.log(editedInfo[field]);
       });
 
         const [changedProperty, propertyValue] = Object.entries(editedData)[0];
@@ -75,11 +79,13 @@ const ClientProfileInfo = () => {
       console.log(editedData);
       // Update the current client with edited info
       setEditedInfo(editedInfo);
-      setIsPhoneEditing(false);
-      setIsEmailEditing(false);
-      setIsTargetEditing(false);
-      setIsNotesEditing(false);
-      setIsRegimeEditing(false);
+      
+    }
+    setIsPhoneEditing(false);
+    setIsEmailEditing(false);
+    setIsTargetEditing(false);
+    setIsNotesEditing(false);
+    setIsRegimeEditing(false);
     };
   
     const handleCancel = () => {
@@ -102,67 +108,71 @@ const ClientProfileInfo = () => {
           <li>
             <div className="icon-phone inline-icons"></div>
             {!isEditingPhone ? (
-              <p>
+              <div className="info-icons-holder">
                 {editedInfo.phone}
-                <button onClick={() => setIsPhoneEditing(true)}>Edit</button>
-              </p>
+                <div className="row-icons icon-edit p-div-margin" onClick={() => setIsPhoneEditing(true)}></div>
+              </div>
             ) : (
-              <div>
+              <div className="edit-icons-input-holder">
                 <input type="text" name="phone" value={editedInfo.phone || ""} onChange={handleInputChange} />
-                <button onClick={handleSave}>Save</button>
-                <button onClick={handleCancel}>Cancel</button>
+                <div className="row-icons icon-save"  onClick={handleSave}></div>
+                <div className="row-icons icon-close-ring" onClick={handleCancel}></div>
               </div>
             )}
           </li>
           <li>
             <div className="icon-email inline-icons"></div>
             {!isEditingEmail ? (
-              <p>
+              <div className="info-icons-holder">
                 {editedInfo.email}
-                <button onClick={() => setIsEmailEditing(true)}>Edit</button>
-              </p>
+                <div className="row-icons icon-edit p-div-margin" onClick={() => setIsEmailEditing(true)}></div>
+              </div>
             ) : (
-              <div>
+              <div className="edit-icons-input-holder">
                 <input type="text" name="email" value={editedInfo.email || ""} onChange={handleInputChange} />
-                <button onClick={handleSave}>Save</button>
-                <button onClick={handleCancel}>Cancel</button>
+                <div className="row-icons icon-save"  onClick={handleSave}></div>
+                <div className="row-icons icon-close-ring" onClick={handleCancel}></div>
               </div>
             )}
           </li>
           <li>
             <div className="icon-calendar-add  inline-icons"></div>
-            <p>{date}</p>
+            <div className="info-icons-holder">{date}</div>
           </li>
         </ul>
 
       <div className="main-box client-target">
             <h3>ЦЕЛ</h3>
             {!isEditingTarget ? (
-              <p>
-                {editedInfo.target}
-                <button onClick={() => setIsTargetEditing(true)}>Edit</button>
-              </p>
-            ) : (
               <div>
-                <input type="text" name="target" value={editedInfo.target || ""} onChange={handleInputChange} />
-                <button onClick={handleSave}>Save</button>
-                <button onClick={handleCancel}>Cancel</button>
+                {editedInfo.target}
+                <div className="row-icons icon-edit p-div-margin" onClick={() => setIsTargetEditing(true)}></div>
               </div>
+            ) : (
+              <>
+                <textarea  className="text-holder" type="text" name="target" rows="12" cols="50" value={editedInfo.target || ""} onChange={handleInputChange} />
+                <div className="change-button-holder">
+                  <div className="row-icons icon-save"  onClick={handleSave}></div>
+                  <div className="row-icons icon-close-ring" onClick={handleCancel}></div>
+                </div>
+              </>
             )}
         </div>
 
       <div className="main-box client-target">
             <h3>БЕЛЕЖКИ</h3>
             {!isEditingNotes ? (
-              <p>
+              <div>
                 {editedInfo.notes}
-                <button onClick={() => setIsNotesEditing(true)}>Edit</button>
-              </p>
+                <div className="row-icons icon-edit p-div-margin"  onClick={() => setIsNotesEditing(true)}></div>
+              </div>
             ) : (
               <div>
-                <input type="text" name="notes" value={editedInfo.notes || ""} onChange={handleInputChange} />
-                <button onClick={handleSave}>Save</button>
-                <button onClick={handleCancel}>Cancel</button>
+                <textarea  className="text-holder" type="text" name="notes" rows="12" cols="50"  value={editedInfo.notes || ""} onChange={handleInputChange} />
+                <div className="change-button-holder">
+                  <div className="row-icons icon-save" onClick={handleSave}></div>
+                  <div className="row-icons icon-close-ring" onClick={handleCancel}></div>
+                </div>
               </div>
             )}
         </div>
@@ -170,15 +180,17 @@ const ClientProfileInfo = () => {
       <div className="main-box client-target">
             <h3>ХРАНИТЕЛЕН РЕЖИМ</h3>
             {!isEditingRegime ? (
-              <p>
+              <div>
                 {editedInfo.foodRegime}
-                <button onClick={() => setIsRegimeEditing(true)}>Edit</button>
-              </p>
+                <div className="row-icons icon-edit p-div-margin" onClick={() => setIsRegimeEditing(true)}></div>
+              </div>
             ) : (
               <div>
-                <input type="text" name="foodRegime" value={editedInfo.foodRegime || ""} onChange={handleInputChange} />
-                <button onClick={handleSave}>Save</button>
-                <button onClick={handleCancel}>Cancel</button>
+                <textarea  className="text-holder" type="text" name="foodRegime" rows="12" cols="50"  value={editedInfo.foodRegime || ""} onChange={handleInputChange} />
+                <div className="change-button-holder">
+                  <div className="row-icons icon-save" onClick={handleSave}></div>
+                  <div className="row-icons icon-close-ring" onClick={handleCancel}></div>
+                </div>
               </div>
             )}
         </div>
