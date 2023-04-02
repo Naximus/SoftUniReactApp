@@ -17,10 +17,7 @@ import NotFound from "./components/not-found/NotFound";
 
 import { localStorageTokenName } from "./config";
 
-import girlAvatar1 from "./assets/avatars/girl_1.jpg";
-import ClientProfileInfo from "./components/clients/client-profile-info/ClientProfileInfo";
-import ClientProfileCards from "./components/clients/client-profile-cards/ClientProfileCards";
-import ClientProfileDashboard from "./components/clients/client-profile-dashboard/ClientProfileDashboard";
+
 import Clients from "./components/clients/clients/Clients";
 import CreateManager from "./pages/admin/manager-create/CreateManager";
 import CreateTrainer from "./pages/manager-profile/trainer-create/CreateTrainer";
@@ -69,7 +66,7 @@ function App() {
           path="/"
           element={
             // <ReqirePermission redirectTo="/login">
-            <Dashboard appUser={appUser} />
+              <Dashboard appUser={appUser} />
             // </ReqirePermission>
           }
         />

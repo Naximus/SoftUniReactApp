@@ -13,9 +13,12 @@ import { AppUserContex } from "../../contexts/AppUserContext";
 
 
 const ClientProfile = () => {
-    
+    const { appUser, setAppUser } = useContext(AppUserContex);
     const { appToken, setAppToken } = useContext(AppTokenContext);
     const { currentClient, setCurrentUser } = useContext(ClientContext);
+
+    const userRole = appUser ? JSON.stringify(appUser.type).replace(/"/g, '') : null;
+
     const [error, setError] = useState(undefined);
 
     const [isLoading, setIsLoading] = useState(false);
@@ -30,10 +33,13 @@ const ClientProfile = () => {
     const [clientAvatar, setClientAvatar] = useState(avatarImage);
     const [isOpen, setIsOpen] = useState(false);
 
+
+    // 
     const userId = useParams(":userId");
     let clientId = userId.clientId;
- 
 
+    // 
+    // let clientId = appUser._id;
 
     useEffect(() => {
         if (!currentClient) {
@@ -119,7 +125,7 @@ const ClientProfile = () => {
             });
 
         }
-        
+
         setIsEditingName(false);
       }
       const handleCancel = () => {
@@ -137,17 +143,19 @@ const ClientProfile = () => {
         
         <main className="client-profile mobile-pages">
             <div className="client-header">
-                <div className="row-icons icon-edit" onClick={handleClick} ></div>
+                {["admin", "trainer", "manager"].includes(userRole) &&
+                    <div className="row-icons icon-edit" onClick={handleClick} ></div>
+                  }
                 <div className="client-avatar">
                     {currentClient ? <img src={clientAvatar} alt="avatar" /> : null}
                 </div>
-
-                {/* {currentClient ? <h3 className="client-name">{currentName}</h3> : null} */}
                   {currentClient ? 
                   !isEditingName ? (
                     <div className="client-name">
                       {editingName}
-                      <div className="row-icons icon-edit p-div-margin" onClick={editName}></div>
+                      {["admin", "trainer", "manager"].includes(userRole) &&
+                        <div className="row-icons icon-edit p-div-margin" onClick={editName}></div>
+                      }
                     </div>
                   ) : (
                     <div className="edit-icons-input-holder">
@@ -176,9 +184,9 @@ const ClientProfile = () => {
       </nav>
       
         {isLoading && <div>Loading...</div>}
-        {!isLoading && activeTab === "info" && currentClient && <div className="client-profile-info"><ClientProfileInfo /></div>}
-        {!isLoading && activeTab === "cards" && currentClient && <div><ClientProfileCards /></div>}
-        {!isLoading && activeTab === "dashboard" && currentClient && <div><ClientProfileDashboard /></div>}
+        {!isLoading && activeTab === "info" && currentClient && <div className="client-profile-info"><ClientProfileInfo userRole={userRole}/></div>}
+        {!isLoading && activeTab === "cards" && currentClient && <div><ClientProfileCards userRole={userRole}/></div>}
+        {!isLoading && activeTab === "dashboard" && currentClient && <div><ClientProfileDashboard userRole={userRole}/></div>}
         </main>
         </>
     )

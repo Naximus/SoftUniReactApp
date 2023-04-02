@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { AppTokenContext } from "../../../contexts/AppTokenContext";
 import { CreateCardConext } from "../../../contexts/CreatCardContex";
 
-const ClientProfileCards = () => {
+const ClientProfileCards = ({userRole}) => {
     const { appToken, setAppToken } = useContext(AppTokenContext);
     const { currentClient, setCurrentUser } = useContext(ClientContext);
 
@@ -169,14 +169,14 @@ const ClientProfileCards = () => {
        <CreateCardConext.Provider value = {cardContexProps} >
         <div className="client-cards-holder">
             {clientCards.map(x => 
-                <SubscriptionCards key= {x._id} {...x} /> 
+                <SubscriptionCards key= {x._id} {...x} userRole={userRole}/> 
             )}
             {clientCards.length === 0 && (
                 <h3 >Няма активни карти</h3>
             )}
-            {/* <h1>Cards</h1> */}
-            
-            <button className="btn-only-text-outline-small" onClick = {showAddCardsMenu}>Добави карта</button>
+            {["admin", "trainer", "manager"].includes(userRole) &&
+                        <button className="btn-only-text-outline-small" onClick = {showAddCardsMenu}>Добави карта</button>
+                      }
               
                 { addCard && <AddSubscriptionCard />}
               

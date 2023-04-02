@@ -3,7 +3,7 @@ import { ClientContext } from "../../../contexts/ClientContext";
 import { BASE_URL } from "../../../api/config";
 import { AppTokenContext } from "../../../contexts/AppTokenContext";
 
-const ClientProfileInfo = () => {
+const ClientProfileInfo = ({userRole}) => {
     const { appToken, setAppToken } = useContext(AppTokenContext);
     const { currentClient, setCurrentClient } = useContext(ClientContext);
     const [error, setError] = useState(undefined);
@@ -105,36 +105,42 @@ const ClientProfileInfo = () => {
     return (
       <>
         <ul className="main-box">
-          <li>
-            <div className="icon-phone inline-icons"></div>
-            {!isEditingPhone ? (
-              <div className="info-icons-holder">
-                {editedInfo.phone}
-                <div className="row-icons icon-edit p-div-margin" onClick={() => setIsPhoneEditing(true)}></div>
-              </div>
-            ) : (
-              <div className="edit-icons-input-holder">
-                <input type="text" name="phone" value={editedInfo.phone || ""} onChange={handleInputChange} />
-                <div className="row-icons icon-save"  onClick={handleSave}></div>
-                <div className="row-icons icon-close-ring" onClick={handleCancel}></div>
-              </div>
-            )}
-          </li>
-          <li>
-            <div className="icon-email inline-icons"></div>
-            {!isEditingEmail ? (
-              <div className="info-icons-holder">
-                {editedInfo.email}
-                <div className="row-icons icon-edit p-div-margin" onClick={() => setIsEmailEditing(true)}></div>
-              </div>
-            ) : (
-              <div className="edit-icons-input-holder">
-                <input type="text" name="email" value={editedInfo.email || ""} onChange={handleInputChange} />
-                <div className="row-icons icon-save"  onClick={handleSave}></div>
-                <div className="row-icons icon-close-ring" onClick={handleCancel}></div>
-              </div>
-            )}
-          </li>
+        {["admin", "trainer", "manager"].includes(userRole) &&
+              <li>
+              <div className="icon-phone inline-icons"></div>
+              {!isEditingPhone ? (
+                <div className="info-icons-holder">
+                  {editedInfo.phone}
+                  <div className="row-icons icon-edit p-div-margin" onClick={() => setIsPhoneEditing(true)}></div>
+                </div>
+              ) : (
+                <div className="edit-icons-input-holder">
+                  <input type="text" name="phone" value={editedInfo.phone || ""} onChange={handleInputChange} />
+                  <div className="row-icons icon-save"  onClick={handleSave}></div>
+                  <div className="row-icons icon-close-ring" onClick={handleCancel}></div>
+                </div>
+              )}
+            </li>
+            }
+      
+          {["admin", "trainer", "manager"].includes(userRole) &&
+                        <li>
+                        <div className="icon-email inline-icons"></div>
+                        {!isEditingEmail ? (
+                          <div className="info-icons-holder">
+                            {editedInfo.email}
+                            <div className="row-icons icon-edit p-div-margin" onClick={() => setIsEmailEditing(true)}></div>
+                          </div>
+                        ) : (
+                          <div className="edit-icons-input-holder">
+                            <input type="text" name="email" value={editedInfo.email || ""} onChange={handleInputChange} />
+                            <div className="row-icons icon-save"  onClick={handleSave}></div>
+                            <div className="row-icons icon-close-ring" onClick={handleCancel}></div>
+                          </div>
+                        )}
+                      </li>
+                      }
+         
           <li>
             <div className="icon-calendar-add  inline-icons"></div>
             <div className="info-icons-holder">{date}</div>
@@ -146,7 +152,11 @@ const ClientProfileInfo = () => {
             {!isEditingTarget ? (
               <div>
                 {editedInfo.target}
-                <div className="row-icons icon-edit p-div-margin" onClick={() => setIsTargetEditing(true)}></div>
+
+                {["admin", "trainer", "manager"].includes(userRole) &&
+                        <div className="row-icons icon-edit p-div-margin" onClick={() => setIsTargetEditing(true)}></div>
+                      }
+
               </div>
             ) : (
               <>
@@ -158,31 +168,36 @@ const ClientProfileInfo = () => {
               </>
             )}
         </div>
-
-      <div className="main-box client-target">
-            <h3>БЕЛЕЖКИ</h3>
-            {!isEditingNotes ? (
-              <div>
-                {editedInfo.notes}
-                <div className="row-icons icon-edit p-div-margin"  onClick={() => setIsNotesEditing(true)}></div>
-              </div>
-            ) : (
-              <div>
-                <textarea  className="text-holder" type="text" name="notes" rows="12" cols="50"  value={editedInfo.notes || ""} onChange={handleInputChange} />
-                <div className="change-button-holder">
-                  <div className="row-icons icon-save" onClick={handleSave}></div>
-                  <div className="row-icons icon-close-ring" onClick={handleCancel}></div>
-                </div>
-              </div>
-            )}
-        </div>
+        {["admin", "trainer", "manager"].includes(userRole) &&
+                        <div className="main-box client-target">
+                        <h3>БЕЛЕЖКИ</h3>
+                        {!isEditingNotes ? (
+                          <div>
+                            {editedInfo.notes}
+                            <div className="row-icons icon-edit p-div-margin"  onClick={() => setIsNotesEditing(true)}></div>
+                          </div>
+                        ) : (
+                          <div>
+                            <textarea  className="text-holder" type="text" name="notes" rows="12" cols="50"  value={editedInfo.notes || ""} onChange={handleInputChange} />
+                            <div className="change-button-holder">
+                              <div className="row-icons icon-save" onClick={handleSave}></div>
+                              <div className="row-icons icon-close-ring" onClick={handleCancel}></div>
+                            </div>
+                          </div>
+                        )}
+                    </div>
+                      }
 
       <div className="main-box client-target">
             <h3>ХРАНИТЕЛЕН РЕЖИМ</h3>
             {!isEditingRegime ? (
               <div>
                 {editedInfo.foodRegime}
-                <div className="row-icons icon-edit p-div-margin" onClick={() => setIsRegimeEditing(true)}></div>
+
+                {["admin", "trainer", "manager"].includes(userRole) &&
+                        <div className="row-icons icon-edit p-div-margin" onClick={() => setIsRegimeEditing(true)}></div>
+                      }
+
               </div>
             ) : (
               <div>

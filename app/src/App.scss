@@ -1,3 +1,58 @@
+/*
+  1. Use a more-intuitive box-sizing model.
+*/
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+/*
+  2. Remove default margin
+*/
+* {
+  margin: 0;
+}
+/*
+  3. Allow percentage-based heights in the application
+*/
+html, body {
+  height: 100%;
+}
+/*
+  Typographic tweaks!
+  4. Add accessible line-height
+  5. Improve text rendering
+*/
+body {
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+/*
+  6. Improve media defaults
+*/
+img, picture, video, canvas, svg {
+  display: block;
+  max-width: 100%;
+}
+/*
+  7. Remove built-in form typography styles
+*/
+input, button, textarea, select {
+  font: inherit;
+}
+/*
+  8. Avoid text overflows
+*/
+p, h1, h2, h3, h4, h5, h6 {
+  overflow-wrap: break-word;
+}
+/*
+  9. Create a root stacking context
+*/
+#root, #__next {
+  isolation: isolate;
+}
+
+
+
 @import './styles/variables.scss';
 @import './styles/mixin.scss';
 @import './styles/components.scss';
@@ -168,13 +223,41 @@ button { cursor: pointer; }
       @include flexStart(column, null);
       li {
         @include flexStart(row, null);
+        flex-wrap: wrap;
         width: 100%;
         margin-bottom: 0.5rem;
-        p {
+        .info-icons-holder {
+          @include flexCenter(row, null);
           font-size: $font-size-between;
           margin-left: 2rem;
           margin-bottom: 0px;
           margin-top: 0px;
+        }
+
+        .p-div-margin {
+          margin-left: 3rem
+        }
+
+
+        .edit-icons-input-holder {
+          display: flex;
+          flex-wrap: wrap;
+          margin-left: 2rem;
+        }
+
+        input {
+          width: 15rem;
+          height: 3rem;
+          border-radius: 4rem;
+          text-align: center;
+          outline: none;
+          border: none;
+          align-self: center;
+          color: white;
+          background-color: $secondary-box-color;
+          &::placeholder {
+            font-size: $font-size-small;
+          }
         }
       }
       
@@ -182,6 +265,7 @@ button { cursor: pointer; }
     .client-target {
       @include flexCenter(column, $secondary-box-color);
       margin-bottom: 1rem;
+      font-size: $font-size-between;
       h3{
         font-size: $font-size-medium;
       }
@@ -189,8 +273,24 @@ button { cursor: pointer; }
         font-size: $font-size-between;
         margin-top: 0;
       }
+      .change-button-holder {
+        display: flex;
+        width: 100%;
+        flex-direction: row;
+        justify-content: space-between;
+      }
     }
   }
+  .text-holder {
+    width: 100%;
+    height: auto;
+    color: white;
+    border-radius: 3rem;
+    padding: 1rem;
+    background-color: $secondary-box-color;
+    font-size: $font-size-between;
+  }
+
   .input-holder{
     @include flexCenter(row, null);
     width: 100%;
@@ -222,67 +322,6 @@ button { cursor: pointer; }
 
 // client cards
 
-// .client-cards-holder {
-//   @include flexCenter(column, null);
-//   margin-top: 2rem;
-  
-// }
-// .personal-card {
-//    background: linear-gradient(90.27deg, #1A2980 3.4%, rgba(38, 208, 206, 0.58) 180.34%);
-// }
-// .group-card {
-//   background: linear-gradient(90.27deg, #CE1E69 3.4%, #284392 83.57%);
-// }
-// .client-card {
-//   width: 29rem;
-//   box-sizing: border-box;
-//   border-radius: 2rem;
-//   margin-bottom: 1rem;
-//   padding: 1rem;
-
-//   .card-top-part {
-//     @include flexCenter(row, null);
-//     justify-content: space-between;
-//     .card-logo {
-//       width: 5rem;
-//       height: 5rem;
-//     }
-//     .card-type{
-//       font-size: $font-size-medium;
-//       margin-top: 0;
-//       margin-bottom: 0;
-//     }
-//   }
-//   .card-middle-part {
-//     @include flexCenter(row, null);
-//     justify-content: space-between;
-//   }
-//   h4 {
-//     font-size: $font-size-normal;
-//     margin: 0;
-//     line-height: 1.2;
-//   }
-//   .client-visits {
-    
-//     h3 {
-//       font-size: $font-size-normal;
-//       margin: 0
-//     }
-
-//     .data-mini {
-//       @include flexCenter(row, null);
-//       justify-content: space-evenly;
-//       flex-wrap: wrap;
-//       p {
-//         font-size: $font-size-small;
-//         margin: 0;
-//       }
-//     }
-    
-//   }
-
-  
-// }
 
 
 .client-cards-holder {
@@ -335,6 +374,7 @@ button { cursor: pointer; }
       @include flexCenter(row, null);
       justify-content: space-evenly;
       flex-wrap: wrap;
+      width: 14rem;
       p {
         font-size: $font-size-small;
         margin: 0;
@@ -399,6 +439,7 @@ button { cursor: pointer; }
   @include flexCenter(column, $main-backgound-color);
   justify-content: flex-start;
   width: 100%;
+  margin-top: 2rem;
   // height: 100vh;
   .search-bar {
     input {
@@ -418,6 +459,7 @@ button { cursor: pointer; }
     margin-top: $margin-between-main-group-elements;
     flex-wrap: wrap;
     .client-holder {
+      @include flexCenter(column, null);
       width: 29rem;
       height: 22rem;
       
@@ -425,6 +467,16 @@ button { cursor: pointer; }
       border-radius: 2rem;
       margin-left: $margin-between-main-group-elements;
       margin-top: $margin-between-main-group-elements;
+      .name-img-holder {
+        @include flexCenter(row, null);
+        width: 100%;
+        justify-content: space-evenly;
+      }
+      img {
+        width: 10rem;
+        height: 10rem;
+        border-radius: 5rem;
+      }
     }
   }
 }
@@ -444,5 +496,19 @@ button { cursor: pointer; }
   input {
     background-color: rgba(156, 156, 156, 0.3);
     color: white;
+  }
+}
+
+
+// Avatar Picker
+.avatar-images {
+  @include flexCenter(row, null);
+  flex-wrap: wrap;
+}
+.avatar-picked-image {
+  @include flexCenter(column, null);
+
+  img {
+    max-width: 40rem;
   }
 }

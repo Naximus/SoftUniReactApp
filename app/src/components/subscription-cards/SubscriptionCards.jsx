@@ -13,7 +13,8 @@ export const SubscriptionCards = ({
     trainingsLeft,
     paid,
     active,
-    trainings
+    trainings,
+    userRole
     
 }) => {
     const currentCard = {
@@ -26,6 +27,7 @@ export const SubscriptionCards = ({
         active,
         trainings
     }
+    console.log(userRole);
     const { appToken, setAppToken } = useContext(AppTokenContext);
     const { currentClient, setCurrentUser } = useContext(ClientContext);
     const { appUser, setAppUser } = useContext(AppUserContex);
@@ -156,9 +158,9 @@ export const SubscriptionCards = ({
                 </div>
             </div>
             <div className="client-visits">
-                <div className="row-icons icon-edit" onClick={handleClick}> 
-                </div>  
-                
+            {["admin", "trainer", "manager"].includes(userRole) &&
+                        <div className="row-icons icon-edit" onClick={handleClick}> </div>
+                      }
                 <div className="card-visits">
                     <h3>Посещени</h3>
                     <div className= 'data-mini'>
@@ -172,7 +174,9 @@ export const SubscriptionCards = ({
                     }
                     </div>
                 </div>
-                <div className={`row-icons ${clientArrived}`} onClick={clientIsArrived}></div>
+                {["admin", "trainer", "manager"].includes(userRole) &&
+                        <div className={`row-icons ${clientArrived}`} onClick={clientIsArrived}></div>
+                      }
             </div>
         </div>
         </>

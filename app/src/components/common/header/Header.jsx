@@ -1,5 +1,6 @@
 import React from "react";
 import "./Header.scss";
+import { Link } from "react-router-dom";
 
 const Header = ({ userType }) => {
   console.log(userType);
@@ -23,7 +24,7 @@ const Header = ({ userType }) => {
           ) : (
             <>
               <li>
-                <a href="/">dashboard</a>
+                <Link href="/">My profile</Link>
               </li>
               {
                 userType === "admin"
@@ -40,6 +41,9 @@ const Header = ({ userType }) => {
                     </li>
                     <li>
                       <a href="/trainers">trainers</a>
+                    </li>
+                    <li>
+                      <a href="/clients">clients</a>
                     </li>
                   </>
                   : null
@@ -66,11 +70,27 @@ const Header = ({ userType }) => {
                   </>
                   : null
               }
+              {
+                userType === "trainer"
+                ? 
+                  <>
+                    <li>
+                      <a href="/trainer">Manager Dashboard</a>
+                    </li>
+                    <li>
+                      <a href="/create-client">add client</a>
+                    </li>
+                    <li>
+                      <a href="/clients">clients</a>
+                    </li>
+                  </>
+                  : null
+              }
+              {/* <li>
+                <a href="/client">My profile</a>
+              </li> */}
               <li>
-                <a href="/create-client">add client</a>
-              </li>
-              <li>
-                <a href="/clients">clients</a>
+                <a href="/trainers-for-clients">trainers</a>
               </li>
               <li>
                 <a href="/logout">logout</a>
