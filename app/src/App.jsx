@@ -25,6 +25,7 @@ import CreateClient from "./pages/trainer-profile/client-create/CreateClient";
 import { ClientContext } from "./contexts/ClientContext";
 import { AppTokenContext } from "./contexts/AppTokenContext";
 import { AppUserContex } from "./contexts/AppUserContext";
+import Home from "./pages/home/Home";
 
 function App() {
   const navigate = useNavigate();
@@ -42,7 +43,8 @@ function App() {
   const loginHandler = (token, decodedToken) => {
     setAppToken(token);
     setAppUser(decodedToken);
-    return navigate(`/`);
+    // return <Dashboard appUser={appUser} />;
+    return navigate(`/client`);
   };
 
   const logoutHandler = () => {
@@ -65,11 +67,21 @@ function App() {
         <Route
           path="/"
           element={
-            // <ReqirePermission redirectTo="/login">
-              <Dashboard appUser={appUser} />
-            // </ReqirePermission>
+              <Home />
           }
         />
+
+        <Route
+          path="/client"
+          element={
+            <ReqirePermission redirectTo="/client">
+              <Dashboard appUser={appUser} />
+            </ReqirePermission>
+          }
+        />
+        <Route path="client/:clientId" element={<ClientProfile />}></Route>
+        <Route path="/trainers-for-clients" element={<h1> trainers-for-clients </h1>} />
+
         {/* <Route
           path="/create-client"
           element={

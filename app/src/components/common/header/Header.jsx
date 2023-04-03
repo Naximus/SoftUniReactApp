@@ -15,35 +15,38 @@ const Header = ({ userType }) => {
           {userType === "guest" ? (
             <>
               <li>
-                <a href="/login">Login</a>
+                <Link to="/">Начало</Link>
               </li>
               <li>
-                <a href="/register">Register</a>
+                <Link to="/login">Вход</Link>
+              </li>
+              <li>
+                <Link to="/register">Регистрация</Link>
               </li>
             </>
           ) : (
             <>
-              <li>
-                <Link href="/">My profile</Link>
-              </li>
               {
                 userType === "admin"
                 ? 
                   <>
                     <li>
-                      <a href="/create-manager">add manager</a>
+                      <Link to="/create-manager">add manager</Link>
                     </li>
                     <li>
-                      <a href="/create-trainer">add trainer</a>
+                      <Link to="/create-trainer">add trainer</Link>
                     </li>
                     <li>
-                      <a href="/managers">managers</a>
+                      <Link to="/create-client">add client</Link>
                     </li>
                     <li>
-                      <a href="/trainers">trainers</a>
+                      <Link to="/managers">managers</Link>
                     </li>
                     <li>
-                      <a href="/clients">clients</a>
+                      <Link to="/trainers">trainers</Link>
+                    </li>
+                    <li>
+                      <Link to="/clients">clients</Link>
                     </li>
                   </>
                   : null
@@ -53,19 +56,19 @@ const Header = ({ userType }) => {
                 ? 
                   <>
                     <li>
-                      <a href="/create-trainer">add trainer</a>
+                      <Link to="/create-trainer">add trainer</Link>
                     </li>
                     <li>
-                      <a href="/trainers">trainers</a>
+                      <Link to="/trainers">trainers</Link>
                     </li>
                     <li>
-                      <a href="/manager">Manager Dashboard</a>
+                      <Link to="/manager">Manager Dashboard</Link>
                     </li>
                     <li>
-                      <a href="/create-client">add client</a>
+                      <Link to="/create-client">add client</Link>
                     </li>
                     <li>
-                      <a href="/clients">clients</a>
+                      <Link to="/clients">clients</Link>
                     </li>
                   </>
                   : null
@@ -75,25 +78,28 @@ const Header = ({ userType }) => {
                 ? 
                   <>
                     <li>
-                      <a href="/trainer">Manager Dashboard</a>
+                      <Link to="/trainer">Manager Dashboard</Link>
                     </li>
                     <li>
-                      <a href="/create-client">add client</a>
+                      <Link to="/create-client">add client</Link>
                     </li>
                     <li>
-                      <a href="/clients">clients</a>
+                      <Link to="/clients">clients</Link>
                     </li>
                   </>
                   : null
               }
-              {/* <li>
-                <a href="/client">My profile</a>
-              </li> */}
               <li>
-                <a href="/trainers-for-clients">trainers</a>
+                <Link to="/">Начало</Link>
               </li>
               <li>
-                <a href="/logout">logout</a>
+                <Link to="/client">My profile</Link>
+              </li>
+              <li>
+                <Link to="/trainers-for-clients">trainers</Link>
+              </li>
+              <li>
+                <Link to="/logout">logout</Link>
               </li>
             </>
           )}

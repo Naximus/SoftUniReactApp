@@ -131,7 +131,10 @@ const ClientProfile = () => {
       const handleCancel = () => {
         setIsEditingName(false);
       }
-      
+      console.log("==============================");
+      console.log("currentClient");
+      console.log(currentClient);
+      console.log("==============================");
       
     return(
         <>
@@ -143,9 +146,9 @@ const ClientProfile = () => {
         
         <main className="client-profile mobile-pages">
             <div className="client-header">
-                {["admin", "trainer", "manager"].includes(userRole) &&
+                {/* {["admin", "trainer", "manager"].includes(userRole) && */}
                     <div className="row-icons icon-edit" onClick={handleClick} ></div>
-                  }
+                  {/* } */}
                 <div className="client-avatar">
                     {currentClient ? <img src={clientAvatar} alt="avatar" /> : null}
                 </div>

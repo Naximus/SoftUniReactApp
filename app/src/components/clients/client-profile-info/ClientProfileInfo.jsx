@@ -97,8 +97,13 @@ const ClientProfileInfo = ({userRole}) => {
       setIsNotesEditing(false);
       setIsRegimeEditing(false);
     };
-  
-  
+    
+    console.log("=========================");
+    console.log(currentClient);
+    console.log(currentClient.created);
+    console.log(currentClient.created.substring(0, 10));
+    console.log("=========================");
+
     const dateStr = currentClient.created;
     const date = dateStr.substring(0, 10);
   
