@@ -4,6 +4,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { AppTokenContext } from '../../../contexts/AppTokenContext';
 import { CreateCardConext } from '../../../contexts/CreatCardContex';
 import Login from '../../../pages/login/Login';
+import { AppUserContex } from '../../../contexts/AppUserContext';
 
 
 export const CardDetails = (
@@ -17,7 +18,7 @@ export const CardDetails = (
 
     const [selectedDate, setSelectedDate] = useState(card.start);
     const [selectedEndDate, setSelectedEndDate] = useState(card.end);
-
+    const { appUser, setAppUser }= useContext(AppUserContex);
 
     const isPaid  = card.paid;
     const paidClass = isPaid ? 'paid-card' : 'unpaid-card';
@@ -29,7 +30,7 @@ export const CardDetails = (
     const onSave = (e) => {
         // const paid = setPaidStatus === 'paid-card' ? false : true;
         const paid = paidStatus === 'paid-card' ? true : false;
-
+        console.log("Trainer" + "    " + appUser._id);
         const newCard = {
             type: card.type,
             start: selectedDate,
@@ -37,6 +38,7 @@ export const CardDetails = (
             trainingsLeft: card.trainingsLeft,
             paid: paid,
             owner: clientId,
+            trainer:  appUser._id
         }
         onSaveCard(newCard);
     }

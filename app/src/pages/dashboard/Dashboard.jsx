@@ -11,9 +11,9 @@ const Dashboard = ({appUser}) => {
             appUser.type === "manager"
             ? <DashboardManager user={appUser} />
             : appUser.type === "admin"
-            ? <DashboardTrainer user={appUser} />
-            : appUser.type === "trainer"
             ? <DashboardManager user={appUser} />
+            : appUser.type === "trainer"
+            ? <DashboardTrainer user={appUser} />
             : <DashboardClient user={appUser} />
         : null;
 }

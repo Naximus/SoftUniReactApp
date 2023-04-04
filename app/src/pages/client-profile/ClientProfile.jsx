@@ -75,18 +75,13 @@ const ClientProfile = () => {
       };
      
     //   Avatar
-      
-
       const handleClick = () => {
           setIsOpen(!isOpen);
-          
         }
       
       const handleClose = () => {
         setIsOpen(false);
       }
-
-
 
 
       const handleInputChange = (event) => {

@@ -1,12 +1,60 @@
-import React from "react";
-import UserInfo from "../../components/user/user-info/UserInfo";
+import React, { useContext, useEffect, useState } from "react";
+import TrainerProfile from "../trainer-profile/TrainerProfile";
+import { AppUserContex } from "../../contexts/AppUserContext";
+import { AppTokenContext } from "../../contexts/AppTokenContext";
+import { TrainerContext } from "../../contexts/TrainerContext";
+import { useNavigate } from "react-router-dom";
+import { BASE_URL } from "../../api/config";
 
-const DashboardTrainer = ({ user }) => {
+const DashboardTrainer = () => {
+
+  console.log("DashboardTrainer");
+  const { appUser, setAppUser } = useContext(AppUserContex);
+  const { appToken, setAppToken } = useContext(AppTokenContext);
+  const { currentTrainer, setCurrentTrenier  } = useContext(TrainerContext);
+
+  const [error, setError] = useState(undefined);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!currentTrainer) {
+      console.log('V ifa');
+        setIsLoading(true);
+        console.log(appUser._id);
+        fetch(`${BASE_URL}/trainers/${appUser._id}`, {
+            method: "GET",
+            headers: { "content-type": "application/json", "X-Authorization" :  appToken},
+            mode: "cors",
+        })
+        .then((response) => {
+            if (!response.ok) throw new Error(response.status);
+            else return response.json();
+        })
+        .then((result) => {
+            console.log(result);
+            setCurrentTrenier(result);
+            setIsLoading(false);
+            navigate(`/trainers/${result._id}`);
+
+        })
+        .catch((error) => {
+            console.log("error: " + error);
+            setError("User could not be authenticated");
+            setIsLoading(false);
+        });
+    } 
+   
+    
+}, [currentTrainer, setCurrentTrenier,  appToken]);
+
+
+
   return (
-    <main className="dashboard dashboard--trainer">
-      <h1>Dashboard Trainer</h1>
-      <UserInfo user={user} />
-    </main>
+    <>
+      < TrainerProfile />
+    </>
   );
 };
 

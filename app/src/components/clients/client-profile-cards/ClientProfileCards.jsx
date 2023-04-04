@@ -63,7 +63,7 @@ const ClientProfileCards = ({userRole}) => {
                 trainingsLeft: newCard.trainingsLeft,
                 paid: newCard.paid,
                 owner: newCard.owner,
-                trainer: clientCreator,
+                trainer: newCard.trainer,
 
             }),
           })

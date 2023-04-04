@@ -41,16 +41,14 @@ export const AddSubscriptionCard = () => {
         "start" : newDate, 
         "end" : futureDate, 
         "trainingsLeft" : "10", 
-        "paid" : "true", 
-        "trainer" : "641234d6f1af71f9f50c9ece" 
+        "paid" : "true"
     }
     const groupTen = { 
         "type" : "group-card", 
         "start" : newDate, 
         "end" : futureDate, 
         "trainingsLeft" : "10", 
-        "paid" : "true", 
-        "trainer" : "641234d6f1af71f9f50c9ece" 
+        "paid" : "true"
     }
 
     const onChoseCard = (e) => {

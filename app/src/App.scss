@@ -420,11 +420,12 @@ button { cursor: pointer; }
 }
 
 .create-card-overlay {
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
+  position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 100;
   background: rgba(0, 0, 0, 0.5);
   backdrop-filter: blur(8px);
   /* Note: backdrop-filter has minimal browser support */
@@ -646,4 +647,47 @@ button { cursor: pointer; }
   height: 100%;
     background: url("./assets/images/atletic_treiner.jpg") no-repeat;
     background-size: cover;
+}
+
+
+
+// Trainers Dashboard
+.trainers-holder {
+  @include flexCenter(column, $main-backgound-color);
+  justify-content: flex-start;
+  width: 29rem;
+  height: auto;
+  margin-top: 2rem;
+  margin-left: 2rem;
+  margin-right: 2rem;
+  padding: 1rem;
+  background-color: $main-box-color;
+  border-radius: 2rem;
+
+  .name-img-holder {
+    @include flexCenter(row, null);
+    width: 100%;
+    justify-content: space-evenly;
+  }
+  img {
+    width: 10rem;
+    height: 10rem;
+    border-radius: 5rem;
+  }
+  p {
+    font-size: $font-size-normal;
+  }
+  .trainers-phone {
+    @include flexCenter(row, null);
+    justify-content: start;
+    width: 100%;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+
+    p {
+      font-size: $font-size-normal;
+      margin-left: 1rem;
+    }
+  }
+   
 }

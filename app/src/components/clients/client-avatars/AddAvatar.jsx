@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useRef, useState } from 'react';
 import { BASE_URL } from '../../../api/config';
 import { AppTokenContext } from '../../../contexts/AppTokenContext';
 import { ClientContext } from '../../../contexts/ClientContext';
+import { TrainerContext } from '../../../contexts/TrainerContext';
 
 
 function AvatarPicker({
@@ -12,6 +13,7 @@ function AvatarPicker({
 
   const { appToken, setAppToken } = useContext(AppTokenContext);
   const { currentClient, setCurrentClient } = useContext(ClientContext);
+  const { currentTrainer, setCurrentTrenier  } = useContext(TrainerContext);
   const [error, setError] = useState(undefined);
 
 
@@ -28,14 +30,22 @@ function AvatarPicker({
         "https://drive.google.com/uc?export=view&id=1-iyuyLkBLQdUjEiXC76u0yFA_Y3-QmRe",
         "https://drive.google.com/uc?export=view&id=1rP6PbPVUoCzw-vylZSYIf7zwxJC4kFdn",
         "https://drive.google.com/uc?export=view&id=1ysX69PS4WoYDPoVU-PBHwjKGcny6TlxR",
+        "https://drive.google.com/uc?export=view&id=13LOP1gk7ANBoXa49J-Wox3BdZbWkad-q",
+        "https://drive.google.com/uc?export=view&id=1gzo-y5fLZdcjwKAekIDdG2uGJLPzEMo0",
+        "https://drive.google.com/uc?export=view&id=1E1gw58Qi6ymg7GWTnZFORjVLnDqkbeCZ",
+        "https://drive.google.com/uc?export=view&id=1jVp_Au625RFwDgQZYCFm-ifGR0E9TYIz",
+        "https://drive.google.com/uc?export=view&id=1BAA4493InYssdV5nNfEz0TgLHY41g0FD",
     ];
 
-    const clientId = currentClient._id;
+    
+    const clientId = currentClient ? currentClient._id  : currentTrainer._id;
+    const reqPath =  currentClient ? "clients"  : "trainers";
+
     const onSaveAvatar = async () => {
             if (prevClientAvatar.current !== selectedAvatar) {
                 console.log("VAV FETCHA pravi zaqvka");
                 // fetch data here
-                await fetch(`${BASE_URL}/clients/${clientId}/image`, {
+                await fetch(`${BASE_URL}/${reqPath}/${clientId}/image`, {
                 method: "PUT",
                 headers: { "content-type": "application/json", "X-Authorization" :  appToken},
                 mode: "cors",

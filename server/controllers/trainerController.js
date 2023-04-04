@@ -27,7 +27,6 @@ router.get("/", async (req, res) => {
 
 router.get("/:id", async (req, res) => {
   const id = req.params.id;
-
   try {
     const result = await userService.getById(id);
 
@@ -212,7 +211,7 @@ router.put("/:id/target", async (req, res) => {
       throw new Error("Target must be defined.");
     }
 
-    const result = await userService.updateName(id, target, "trainer");
+    const result = await userService.updateTarget(id, target, "trainer");
 
     res.status(201).json(result);
   } catch (error) {
@@ -270,5 +269,44 @@ router.put("/:id/status", async (req, res) => {
     res.status(400).json({ error: getErrorMessage(error) });
   }
 });
+
+router.put("/:id/image", async (req, res) => {
+  try {
+    const id = req.params.id;
+    const { image } = req.body;
+
+    if (!image) {
+      throw new Error("image must be defined.");
+    }
+
+    const result = await userService.updateImage(id, image, "trainer");
+
+    res.status(201).json(result);
+  } catch (error) {
+    res.status(400).json({ error: getErrorMessage(error) });
+  }
+});
+
+
+
+router.get("/:id/clients", async (req, res) => {
+  const query = { ...req.query };
+  query.trainer = req.params.id;
+  query.skip = query.skip ? query.skip : 0;
+  query.limit = query.limit ? query.limit : DEFAULT_DB_FETCH_LIMIT;
+  query.sortBy = query.sortBy ? query.sortBy : "name";
+  query.orderBy = query.orderBy ? query.orderBy : "asc";
+
+  try {
+    // const result = await userService.getByCreatorID(query);
+    const result = await userService.getClientsByTrainerId(query);
+
+    res.status(200).json(result);
+  } catch (error) {
+    res.status(400).json({ error: getErrorMessage(error) });
+  }
+});
+
+
 
 module.exports = router;

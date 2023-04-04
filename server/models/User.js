@@ -60,15 +60,15 @@ const userShema = new mongoose.Schema({
   },
   target: {
     type: String,
-    maxLength: [160, "Target can be no longer that 160 characters"],
+    maxLength: [1000, "Target can be no longer that 1000 characters"],
   },
   foodRegime: {
     type: String,
-    maxLength: [160, "Food regime can be no longer that 160 characters"],
+    maxLength: [1000, "Food regime can be no longer that 1000 characters"],
   },
   notes: {
     type: String,
-    maxLength: [160, "Notes can be no longer that 160 characters"],
+    maxLength: [1000, "Notes can be no longer that 1000 characters"],
   },
   creator: {
     type: mongoose.Types.ObjectId,

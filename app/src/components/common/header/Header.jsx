@@ -78,7 +78,7 @@ const Header = ({ userType }) => {
                 ? 
                   <>
                     <li>
-                      <Link to="/trainer">Manager Dashboard</Link>
+                      <Link to="/trainer">Моя профил</Link>
                     </li>
                     <li>
                       <Link to="/create-client">add client</Link>

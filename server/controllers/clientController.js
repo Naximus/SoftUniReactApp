@@ -769,4 +769,23 @@ router.put("/:id/cards/:cardId", async (req, res) => {
 });
 
 
+
+// router.get("/trainer/:creatorId", async (req, res) => {
+//   const query = { ...req.query };
+//   query.type = "client";
+//   query.creator = req.params.creatorId;
+//   query.skip = query.skip ? query.skip : 0;
+//   query.limit = query.limit ? query.limit : DEFAULT_DB_FETCH_LIMIT;
+//   query.sortBy = query.sortBy ? query.sortBy : "name";
+//   query.orderBy = query.orderBy ? query.orderBy : "asc";
+
+//   try {
+//     const result = await userService.getByCreaterID(query);
+//     res.status(200).json(result);
+//   } catch (error) {
+//     res.status(400).json({ error: getErrorMessage(error) });
+//   }
+// });
+
+
 module.exports = router;

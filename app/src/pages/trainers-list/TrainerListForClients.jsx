@@ -1,6 +1,8 @@
 import { useContext, useEffect, useState } from "react";
 import { AppTokenContext } from "../../contexts/AppTokenContext";
 import { BASE_URL } from "../../api/config";
+import SingleTrainer from "../../components/trainers/trainers/SingleTrainer";
+import SingleTrainerForClients from "../../components/trainers/trainers/SingleTrainerForClients";
 
 
 
@@ -36,10 +38,38 @@ const TrainersListForClients = () => {
       });
   }, []);
 
-  
+    // serach
+    const searchKey = 'name';
+    const handleInputChange = (event) => {
+      setQuery(event.target.value);
+    };
+
+    const filteredData = trainers.filter((item) => {
+      // Filter the data based on the search query and searchKey
+      return item[searchKey].toLowerCase().includes(query.toLowerCase());
+    });
+    console.log(filteredData);
+  // =============
 
     return (
-        <h1> trainers-for-clients </h1>
+      <>
+
+      <div className="clients-holder">
+        <div className="search-bar">
+        <input 
+          type="text"
+          placeholder="Search..."
+          value={query}
+          onChange={handleInputChange}
+        />
+        </div>
+        <div className="clients">
+          {filteredData.map((trainer) => (
+            < SingleTrainerForClients key={trainer._id} trainer= {trainer} />
+          ))}
+        </div>
+      </div>
+      </>
     )
 }
 

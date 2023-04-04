@@ -4,6 +4,9 @@ import { AppTokenContext } from "../../contexts/AppTokenContext";
 import { TrainerContext } from "../../contexts/TrainerContext";
 import { BASE_URL } from "../../api/config";
 import { useParams } from "react-router-dom";
+import AvatarPicker from "../../components/clients/client-avatars/AddAvatar";
+import TrainerProfileInfo from "../../components/trainers/trainer-profile-info/TrainerProfileInfo";
+import { TrainerClients } from "../../components/trainers/trainer-clients/TrainerClients";
 
 
 
@@ -27,7 +30,7 @@ const TrainerProfile = () => {
     const [editingName, setEditName] = useState(userName);
     // Avatar
     const avatarImage = currentTrainer ? currentTrainer.image : null;
-    const [trainerAvatar, setTrainerAvatar] = useState(avatarImage);
+    const [clientAvatar, setClientAvatar] = useState(avatarImage);
     const [isOpen, setIsOpen] = useState(false);
 
 
@@ -51,7 +54,7 @@ const TrainerProfile = () => {
                 console.log(result);
                 setEditName(result.name);
                 setCurrentName(result.name);
-                setTrainerAvatar(result.image);
+                setClientAvatar(result.image);
                 setCurrentTrenier(result);
                 setIsLoading(false);
 
@@ -128,7 +131,62 @@ const TrainerProfile = () => {
 
 
     return (
-        <h1>Trainer Profile</h1>
+        <>
+        {isOpen && <AvatarPicker 
+            clientAvatar={clientAvatar}
+            setClientAvatar={setClientAvatar}
+            onClose={handleClose}/>
+          }
+          
+          <main className="client-profile mobile-pages">
+              <div className="client-header">
+                  {/* {["admin", "trainer", "manager"].includes(userRole) && */}
+                      <div className="row-icons icon-edit" onClick={handleClick} ></div>
+                    {/* } */}
+                  <div className="client-avatar">
+                      {currentTrainer ? <img src={clientAvatar} alt="avatar" /> : null}
+                  </div>
+                    {currentTrainer ? 
+                    !isEditingName ? (
+                      <div className="client-name">
+                        {editingName}
+                        {["admin", "manager"].includes(userRole) &&
+                          <div className="row-icons icon-edit p-div-margin" onClick={editName}></div>
+                        }
+                      </div>
+                    ) : (
+                      <div className="edit-icons-input-holder">
+                        <input type="text" name="name" value={editingName || ""}  onChange={handleInputChange}/>
+                        <div className="row-icons icon-save"  onClick={handleSave}></div>
+                        <div className="row-icons icon-close-ring" onClick={handleCancel}></div>
+                      </div>
+                    ) 
+                  : null}
+  
+              </div>
+              <nav className="navigation">
+  
+          <div
+            className={activeTab === "info" ? "btn-icons icon-info-active" : "btn-icons icon-info"}
+            onClick={() => handleTabClick("info")}
+          > </div>
+          <div
+            className={activeTab === "cards" ? "btn-icons icon-clients-active" : "btn-icons icon-clients"}
+            onClick={() => handleTabClick("cards")}
+          ></div>
+          <div
+            className={activeTab === "dashboard" ? "btn-icons icon-desk-active" : "btn-icons icon-desk"}
+            onClick={() => handleTabClick("dashboard")}
+          ></div>
+        </nav>
+        
+          {isLoading && <div>Loading...</div>}
+          {!isLoading && activeTab === "info" && currentTrainer && <div className="client-profile-info"><TrainerProfileInfo userRole={userRole}/></div>}
+          {!isLoading && activeTab === "cards" && currentTrainer && <div><TrainerClients userRole={userRole}/></div>}
+          {/* {!isLoading && activeTab === "dashboard" && currentClient && <div><ClientProfileDashboard userRole={userRole}/></div>} */}
+          </main>
+
+          </>
     )
 }
 

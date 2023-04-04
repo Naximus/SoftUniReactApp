@@ -487,3 +487,86 @@ exports.addMeasures = async (data, owner, creator) => {
 
   return await measures.save();
 };
+
+
+
+exports.getByCreatorID = async (query) => {
+  let qry = {};
+  let result = { data: {}, count: 0 };
+
+  qry.userCreator = query.creator;
+  result.count = await User.find({ creator: qry.userCreator }).countDocuments();
+
+  qry.limit = query.limit ? query.limit : 20;
+  result.limit = qry.limit;
+
+  qry.skip = query.skip
+    ? query.skip < result.count
+      ? query.skip
+      : result.count
+    : 0;
+  result.skip = qry.skip;
+
+  qry.find = {};
+  qry.find.creator = qry.userCreator;
+  qry.find.active = query.active === false ? false : true;
+
+
+  if (query.creator) {
+    qry.find.creator = query.creator;
+  }
+
+  if (query.phone) {
+    qry.phone = query.phone;
+  }
+
+  qry.orderBy = query.orderBy === "desc" ? "desc" : "asc";
+
+  qry.sort = {};
+
+  if (query.sortBy) {
+    qry.sort[query.sortBy] = qry.orderBy;
+  } else {
+    qry.sort = { name: qry.orderBy };
+  }
+
+  result.data = await User.find(qry.find)
+    .sort(qry.sort)
+    .skip(qry.skip)
+    .limit(qry.limit)
+    .lean();
+  return result;
+};
+
+
+exports.getClientsByTrainerId = async (query) => {
+  
+  let qry = {};
+  qry.sort = {};
+
+  let result = { data: {}, count: 0 };
+
+  if (query.sortBy) {
+    qry.sort[query.sortBy] = qry.orderBy;
+  } else {
+    qry.sort = { name: qry.orderBy };
+  }
+
+  // 1. get Cards associated with that trainer
+  const cards = await Card.find({trainer: query.trainer}).lean();
+  
+  // get only the userId from card documents
+  let usersIds = cards.map(c => c.owner.toString());
+  // remove duplicates
+  // usersIds = [...new Set(usersIds)];
+
+  // 2. Get Users
+  qry.find = { _id: { $in: usersIds } };
+  result.data = await User.find(qry.find)
+    .sort(qry.sort)
+    .lean();
+
+  result.count = result.data.length;
+  
+  return result;
+};

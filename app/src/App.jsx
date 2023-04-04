@@ -48,8 +48,9 @@ function App() {
   const loginHandler = (token, decodedToken) => {
     setAppToken(token);
     setAppUser(decodedToken);
+    console.log(decodedToken.type);
     // return <Dashboard appUser={appUser} />;
-    return navigate(`/client`);
+    return navigate(`/${decodedToken.type}`);
   };
 
   const logoutHandler = () => {
@@ -81,6 +82,14 @@ function App() {
           path="/client"
           element={
             <ReqirePermission redirectTo="/client">
+              <Dashboard appUser={appUser} />
+            </ReqirePermission>
+          }
+        />
+        <Route
+          path="/trainer"
+          element={
+            <ReqirePermission redirectTo="/trainer">
               <Dashboard appUser={appUser} />
             </ReqirePermission>
           }

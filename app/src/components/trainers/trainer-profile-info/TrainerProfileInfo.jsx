@@ -1,15 +1,14 @@
 import React, { useContext, useEffect, useState } from "react";
-import { ClientContext } from "../../../contexts/ClientContext";
 import { BASE_URL } from "../../../api/config";
 import { AppTokenContext } from "../../../contexts/AppTokenContext";
+import { TrainerContext } from "../../../contexts/TrainerContext";
 
-const ClientProfileInfo = ({userRole}) => {
+const TrainerProfileInfo = ({userRole}) => {
     const { appToken, setAppToken } = useContext(AppTokenContext);
-    const { currentClient, setCurrentUser } = useContext(ClientContext);
-
+    const { currentTrainer, setCurrentTrenier  } = useContext(TrainerContext);
     const [error, setError] = useState(undefined);
 
-    const [editedInfo, setEditedInfo] = useState(currentClient);
+    const [editedInfo, setEditedInfo] = useState(currentTrainer);
   
     const [isEditingPhone, setIsPhoneEditing] = useState(false);
     const [isEditingEmail, setIsEmailEditing] = useState(false);
@@ -20,8 +19,15 @@ const ClientProfileInfo = ({userRole}) => {
     const [editedFields, setEditedFields] = useState([]);
     const [isChaned, setIsChanged] = useState(false);
 
-    const clientId = currentClient._id;
+    const clientId = currentTrainer._id;
 
+    // const handleEdit = (key, value) => {
+    //   setEditedInfo({
+    //     ...editedInfo,
+    //     [key]: value
+    //   });
+    //   setEditedFields((prevFields) => [...prevFields, key]);
+    // };
   
     const handleInputChange = (event) => {
       setIsChanged(true);
@@ -49,7 +55,8 @@ const ClientProfileInfo = ({userRole}) => {
 
         const reqProperty = changedProperty == "foodRegime" ? "food-regime" : changedProperty;
 
-      await fetch(`${BASE_URL}/clients/${clientId}/${reqProperty}`, {
+      console.log(editedInfo);
+      await fetch(`${BASE_URL}/trainers/${clientId}/${reqProperty}`, {
         method: "PUT",
         headers: { "content-type": "application/json", "X-Authorization" :  appToken},
         mode: "cors",
@@ -61,10 +68,9 @@ const ClientProfileInfo = ({userRole}) => {
           if (!response.ok) throw new Error(response.status);
           else {
             
-            const newData = editedInfo;
-            setCurrentUser(newData);
-            console.log(newData);
-            return response.json()};
+            setCurrentTrenier(editedInfo);
+            return response.json();
+          }
         })
         .catch((error) => {
           console.log("error: " + error);
@@ -89,7 +95,7 @@ const ClientProfileInfo = ({userRole}) => {
     };
   
     const handleCancel = () => {
-      setEditedInfo(currentClient);
+      setEditedInfo(currentTrainer);
       setEditedFields([]);
       setIsPhoneEditing(false);
       setIsEmailEditing(false);
@@ -97,15 +103,9 @@ const ClientProfileInfo = ({userRole}) => {
       setIsNotesEditing(false);
       setIsRegimeEditing(false);
     };
-    
-    console.log("=========================");
-    console.log(editedInfo);
-    console.log(currentClient);
-    console.log(currentClient.created);
-    console.log(currentClient.created.substring(0, 10));
-    console.log("=========================");
 
-    const dateStr = currentClient.created;
+
+    const dateStr = currentTrainer.created;
     const date = dateStr.substring(0, 10);
   
     return (
@@ -159,7 +159,7 @@ const ClientProfileInfo = ({userRole}) => {
               <div>
                 {editedInfo.target}
 
-                {["admin", "trainer", "manager"].includes(userRole) &&
+                {["admin","manager"].includes(userRole) &&
                         <div className="row-icons icon-edit p-div-margin" onClick={() => setIsTargetEditing(true)}></div>
                       }
 
@@ -195,12 +195,12 @@ const ClientProfileInfo = ({userRole}) => {
                       }
 
       <div className="main-box client-target">
-            <h3>ХРАНИТЕЛЕН РЕЖИМ</h3>
+            <h3>ЗА МЕН</h3>
             {!isEditingRegime ? (
               <div>
                 {editedInfo.foodRegime}
 
-                {["admin", "trainer", "manager"].includes(userRole) &&
+                {["trainer"].includes(userRole) &&
                         <div className="row-icons icon-edit p-div-margin" onClick={() => setIsRegimeEditing(true)}></div>
                       }
 
@@ -219,4 +219,4 @@ const ClientProfileInfo = ({userRole}) => {
   );
 };
 
-export default ClientProfileInfo;
+export default TrainerProfileInfo;
