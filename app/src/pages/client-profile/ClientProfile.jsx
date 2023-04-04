@@ -131,10 +131,6 @@ const ClientProfile = () => {
       const handleCancel = () => {
         setIsEditingName(false);
       }
-      console.log("==============================");
-      console.log("currentClient");
-      console.log(currentClient);
-      console.log("==============================");
       
     return(
         <>

@@ -31,22 +31,22 @@ const Header = ({ userType }) => {
                 ? 
                   <>
                     <li>
-                      <Link to="/create-manager">add manager</Link>
+                      <Link to="/create-manager">Създай мениджър</Link>
                     </li>
                     <li>
-                      <Link to="/create-trainer">add trainer</Link>
+                      <Link to="/create-trainer">Създай треньор</Link>
                     </li>
                     <li>
-                      <Link to="/create-client">add client</Link>
+                      <Link to="/create-client">Създай клиент</Link>
                     </li>
                     <li>
-                      <Link to="/managers">managers</Link>
+                      <Link to="/managers">Мениджъри</Link>
                     </li>
                     <li>
-                      <Link to="/trainers">trainers</Link>
+                      <Link to="/trainers">Треньори</Link>
                     </li>
                     <li>
-                      <Link to="/clients">clients</Link>
+                      <Link to="/clients">Клиенти</Link>
                     </li>
                   </>
                   : null
@@ -89,7 +89,22 @@ const Header = ({ userType }) => {
                   </>
                   : null
               }
-              <li>
+              {
+                userType === "client" ?
+                <>
+                <li>
+                  <Link to="/">Начало</Link>
+                </li>
+                <li>
+                <Link to="/client">My profile</Link>
+                </li>
+                <li>
+                <Link to="/trainers-for-clients">trainers</Link>
+              </li>
+                </>
+                : null
+              }
+              {/* <li>
                 <Link to="/">Начало</Link>
               </li>
               <li>
@@ -97,9 +112,9 @@ const Header = ({ userType }) => {
               </li>
               <li>
                 <Link to="/trainers-for-clients">trainers</Link>
-              </li>
+              </li> */}
               <li>
-                <Link to="/logout">logout</Link>
+                <Link to="/logout">Изход</Link>
               </li>
             </>
           )}

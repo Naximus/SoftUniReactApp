@@ -26,6 +26,10 @@ import { ClientContext } from "./contexts/ClientContext";
 import { AppTokenContext } from "./contexts/AppTokenContext";
 import { AppUserContex } from "./contexts/AppUserContext";
 import Home from "./pages/home/Home";
+import TrainersListForClients from "./pages/trainers-list/TrainerListForClients";
+import Trainers from "./components/trainers/trainers/Trainers";
+import TrainerProfile from "./pages/trainer-profile/TrainerProfile";
+import { TrainerContext } from "./contexts/TrainerContext";
 
 function App() {
   const navigate = useNavigate();
@@ -38,6 +42,7 @@ function App() {
   const [appUser, setAppUser] = useState(decodedToken);
   const [appToken, setAppToken] = useState(lsToken);
   const [currentClient, setCurrentUser] =useState();
+  const [ currentTrainer, setCurrentTrenier ] = useState();
 
 
   const loginHandler = (token, decodedToken) => {
@@ -61,6 +66,7 @@ function App() {
       <ClientContext.Provider value={{currentClient, setCurrentUser}}>
       <AppTokenContext.Provider value={{appToken, setAppToken}}>
       <AppUserContex.Provider value={{appUser, setAppUser}}>
+      <TrainerContext.Provider value={{currentTrainer, setCurrentTrenier}}>
       <Header userType={appUser.type} />
       <Routes>
         <Route path="/login" element={<Login onLogin={loginHandler} />} />
@@ -80,8 +86,10 @@ function App() {
           }
         />
         <Route path="client/:clientId" element={<ClientProfile />}></Route>
-        <Route path="/trainers-for-clients" element={<h1> trainers-for-clients </h1>} />
 
+        <Route path="/trainers-for-clients" element={<TrainersListForClients />} />
+        <Route path="/trainers" element={<Trainers />} />
+        <Route path="trainers/:trainerId" element={<TrainerProfile />}></Route>
         {/* <Route
           path="/create-client"
           element={
@@ -148,6 +156,7 @@ function App() {
         </Route> */}
         <Route path="*" element={<NotFound status={404} />} />
       </Routes>
+      </TrainerContext.Provider>
       </AppUserContex.Provider>
       </AppTokenContext.Provider>
       </ ClientContext.Provider>

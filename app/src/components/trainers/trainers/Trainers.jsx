@@ -1,21 +1,26 @@
 import { useContext, useEffect, useState } from "react";
 import { BASE_URL } from "../../../api/config";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
-import SingleClient from "./SingleClient";
+import { useNavigate } from "react-router-dom";
 import { AppTokenContext } from "../../../contexts/AppTokenContext";
+import SingleTrainer from "./SingleTrainer";
+import { TrainerContext } from "../../../contexts/TrainerContext";
 
 
-const Clients = () => {
-  const [clients, setClients] = useState([]);
+const Trainers = () => {
+  const [trainers, setTrainers] = useState([]);
   const [error, setError] = useState(undefined);
   const { appToken, setAppToken } = useContext(AppTokenContext);
+
+  
+
 
   // serach
   const [query, setQuery] = useState('');
   // =============
 
+
   useEffect(() => {
-    fetch(`${BASE_URL}/clients`, {
+    fetch(`${BASE_URL}/trainers`, {
       method: "GET",
       headers: { "content-type": "application/json", "X-Authorization" :  appToken},
       mode: "cors",
@@ -26,7 +31,8 @@ const Clients = () => {
       })
       .then((result) => {
         console.log(result);
-        setClients(result.data);
+        console.log(result.data);
+        setTrainers(result.data);
       })
       .catch((error) => {
         console.log("error: " + error);
@@ -41,7 +47,7 @@ const Clients = () => {
       setQuery(event.target.value);
     };
 
-    const filteredData = clients.filter((item) => {
+    const filteredData = trainers.filter((item) => {
       // Filter the data based on the search query and searchKey
       return item[searchKey].toLowerCase().includes(query.toLowerCase());
     });
@@ -50,7 +56,7 @@ const Clients = () => {
 
   return (
     <>
-
+    
     <div className="clients-holder">
       <div className="search-bar">
       <input 
@@ -61,14 +67,15 @@ const Clients = () => {
       />
       </div>
       <div className="clients">
-        {filteredData.map((client) => (
-          < SingleClient key={client._id} client= {client} />
+        {filteredData.map((trainer) => (
+          < SingleTrainer key={trainer._id} trainer= {trainer} />
         ))}
       </div>
     </div>
+   
     </>
   );
 };
 
 
-export default Clients;
+export default Trainers;
