@@ -1,0 +1,24 @@
+@import "../../../styles/variables.scss";
+
+.app-header {
+
+  &--admin {
+    background-color: $btn-confirmation-cancel;
+  }
+
+ nav ul {
+    list-style: none;
+    display: flex;
+
+    li {
+      color: white;
+      font-size: $font-size-medium;
+      margin: $padding-small;
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+    }
+  }
+}

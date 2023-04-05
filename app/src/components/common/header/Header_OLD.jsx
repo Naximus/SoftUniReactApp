@@ -1,31 +1,17 @@
-import { useState } from "react";
 import "./Header.scss";
 import { Link } from "react-router-dom";
-import hamburger  from '../../../assets/icons/menu_white.png'
-// import { ReactComponent as Brand } from '../../../assets/icons/menu_white.png'
 
 const Header = ({ userType }) => {
   console.log(userType);
   const isAuth = userType !== "guest";
 
 
-  const [showNavbar, setShowNavbar] = useState(false)
-
-  const handleShowNavbar = () => {
-    setShowNavbar(!showNavbar)
-  }
-
-  
   return (
     <header
       className={`app-header app-header--${userType}`}
     >
-      <nav className="navbar">
-      <div className="menu-icon" onClick={handleShowNavbar}>
-          <img src={hamburger} />
-        </div>
-        <div className={`nav-elements  ${showNavbar && 'active'}`}>
-        <ul onClick={handleShowNavbar}>
+      <nav>
+        <ul>
           {userType === "guest" ? (
             <>
               <li>
@@ -33,6 +19,9 @@ const Header = ({ userType }) => {
               </li>
               <li>
                 <Link to="/login">Вход</Link>
+              </li>
+              <li>
+                <Link to="/register">Регистрация</Link>
               </li>
             </>
           ) : (
@@ -67,19 +56,19 @@ const Header = ({ userType }) => {
                 ? 
                   <>
                     <li>
-                      <Link to="/create-trainer">Създай треньор</Link>
+                      <Link to="/create-trainer">add trainer</Link>
                     </li>
                     <li>
-                      <Link to="/trainers">Треньори</Link>
+                      <Link to="/trainers">trainers</Link>
                     </li>
                     <li>
                       <Link to="/manager">Manager Dashboard</Link>
                     </li>
                     <li>
-                      <Link to="/create-client">Създай клиент</Link>
+                      <Link to="/create-client">add client</Link>
                     </li>
                     <li>
-                      <Link to="/clients">Клиент</Link>
+                      <Link to="/clients">clients</Link>
                     </li>
                   </>
                   : null
@@ -92,10 +81,10 @@ const Header = ({ userType }) => {
                       <Link to="/trainer">Моя профил</Link>
                     </li>
                     <li>
-                      <Link to="/create-client">Създай клиент</Link>
+                      <Link to="/create-client">add client</Link>
                     </li>
                     <li>
-                      <Link to="/clients">Клиент</Link>
+                      <Link to="/clients">clients</Link>
                     </li>
                   </>
                   : null
@@ -107,10 +96,10 @@ const Header = ({ userType }) => {
                   <Link to="/">Начало</Link>
                 </li>
                 <li>
-                <Link to="/client">Моя профил</Link>
+                <Link to="/client">My profile</Link>
                 </li>
                 <li>
-                <Link to="/trainers-for-clients">Треньори</Link>
+                <Link to="/trainers-for-clients">trainers</Link>
               </li>
                 </>
                 : null
@@ -120,9 +109,7 @@ const Header = ({ userType }) => {
               </li>
             </>
           )}
-
         </ul>
-        </div>
       </nav>
 
 

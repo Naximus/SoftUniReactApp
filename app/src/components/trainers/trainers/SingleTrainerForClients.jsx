@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { TrainerContext } from "../../../contexts/TrainerContext";
+// import { TrainerContext } from "../../../contexts/TrainerContext";
 
 
 
@@ -9,8 +9,13 @@ const SingleTrainerForClients = ({
     trainer
 }) => {
     console.log(trainer);
-    const {currentTrainer, setCurrentTrenier} = useContext(TrainerContext)
-
+    // const {currentTrainer, setCurrentTrenier} = useContext(TrainerContext)
+    const [isOpen, setIsOpen] = useState(false);
+    const [openButton, setOpenButten] =useState("down")
+    const toggle = (e) => {
+        !isOpen ? setIsOpen(true) : setIsOpen(false);
+        openButton === "down" ? setOpenButten("up") : setOpenButten("down");
+    }
 
     return (
             <div className="trainers-holder">
@@ -27,13 +32,13 @@ const SingleTrainerForClients = ({
                     </div>
                     <div className="trainers-phone">
                     <div className="icon-email inline-icons"></div>
-                    <p>
-                        {trainer.email}
-                        </p>
+                        <p>{trainer.email}</p>
                     </div>
+
                     <div>
-                    <p>{trainer.foodRegime}</p>
+                        {isOpen && <p>{trainer.foodRegime}</p>}
                     </div>
+                    <div className={`row-icons icon-expand-${openButton}`} onClick={toggle}> </div>
             </div>
         
     )

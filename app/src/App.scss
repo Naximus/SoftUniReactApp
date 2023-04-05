@@ -425,7 +425,7 @@ button { cursor: pointer; }
     height: 100%;
     top: 0;
     left: 0;
-    z-index: 100;
+    z-index: 11;
   background: rgba(0, 0, 0, 0.5);
   backdrop-filter: blur(8px);
   /* Note: backdrop-filter has minimal browser support */
