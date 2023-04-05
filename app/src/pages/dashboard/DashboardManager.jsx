@@ -1,12 +1,60 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import UserInfo from "../../components/user/user-info/UserInfo";
+import { AppUserContex } from "../../contexts/AppUserContext";
+import { AppTokenContext } from "../../contexts/AppTokenContext";
+import { TrainerContext } from "../../contexts/TrainerContext";
+import { useNavigate } from "react-router-dom";
+import { BASE_URL } from "../../api/config";
+import ManagerProfile from "../manager-profile/ManagerProfile";
 
-const DashboardManager = ({ user }) => {
+const DashboardManager = () => {
+  console.log('DashboardManager');
+  const { appUser, setAppUser } = useContext(AppUserContex);
+  const { appToken, setAppToken } = useContext(AppTokenContext);
+  // const { currentTrainer, setCurrentTrenier  } = useContext(TrainerContext);
+
+  const [error, setError] = useState(undefined);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!appUser) {
+      console.log('V ifa');
+        setIsLoading(true);
+        console.log(appUser._id);
+        fetch(`${BASE_URL}/manager/${appUser._id}`, {
+            method: "GET",
+            headers: { "content-type": "application/json", "X-Authorization" :  appToken},
+            mode: "cors",
+        })
+        .then((response) => {
+            if (!response.ok) throw new Error(response.status);
+            else return response.json();
+        })
+        .then((result) => {
+            console.log(result);
+            setAppUser(result);
+            setIsLoading(false);
+            navigate(`/manager/${result._id}`);
+
+        })
+        .catch((error) => {
+            console.log("error: " + error);
+            setError("User could not be authenticated");
+            navigate(`/login`);
+            setIsLoading(false);
+        });
+    } 
+   
+    
+}, [appUser, setAppUser,  appToken]);
+
+
+  console.log(appUser);
+
   return (
-    <main className="dashboard dashboard--manager">
-      <h1>Dashboard Manager</h1>
-      <UserInfo user={user} />
-    </main>
+    <ManagerProfile />
   );
 };
 

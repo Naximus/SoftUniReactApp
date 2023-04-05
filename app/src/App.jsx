@@ -30,6 +30,7 @@ import TrainersListForClients from "./pages/trainers-list/TrainerListForClients"
 import Trainers from "./components/trainers/trainers/Trainers";
 import TrainerProfile from "./pages/trainer-profile/TrainerProfile";
 import { TrainerContext } from "./contexts/TrainerContext";
+import ManagerProfile from "./pages/manager-profile/ManagerProfile";
 
 function App() {
   const navigate = useNavigate();
@@ -58,9 +59,6 @@ function App() {
     setAppUser({ type: "guest" });
   };
 
- 
-  
-
 
   return (
     <div className="App">
@@ -68,6 +66,7 @@ function App() {
       <AppTokenContext.Provider value={{appToken, setAppToken}}>
       <AppUserContex.Provider value={{appUser, setAppUser}}>
       <TrainerContext.Provider value={{currentTrainer, setCurrentTrenier}}>
+
       <Header userType={appUser.type} />
       <Routes>
         <Route path="/login" element={<Login onLogin={loginHandler} />} />
@@ -94,19 +93,26 @@ function App() {
             </ReqirePermission>
           }
         />
+          <Route
+          path="/manager"
+          element={
+            <ReqirePermission redirectTo="/manager">
+              <Dashboard appUser={appUser} />
+            </ReqirePermission>
+          }
+        />
+
+        <Route path="manager/:manager" element={<ManagerProfile />}></Route>
+
+
+
+
         <Route path="client/:clientId" element={<ClientProfile />}></Route>
 
         <Route path="/trainers-for-clients" element={<TrainersListForClients />} />
         <Route path="/trainers" element={<Trainers />} />
         <Route path="trainers/:trainerId" element={<TrainerProfile />}></Route>
-        {/* <Route
-          path="/create-client"
-          element={
-            // <ReqirePermission redirectTo="/login">
-            <CreateClient />
-            // </ReqirePermission>
-          }
-        /> */}
+    
         {/* <Route
           path="/clients"
           element={
@@ -116,55 +122,18 @@ function App() {
           }
         /> */}
         <Route path="/logout" element={<Logout onLogout={logoutHandler} />} />
-        {/* <Route
-          path="/admin"
-          element={
-            <ReqirePermission redirectTo="/login">
-              <Admin appUser={appUser} />
-            </ReqirePermission>
-          }
-        > */}
-          {/* <Route path="create-manager" element={<CreateManager user={appUser} />} /> */}
-        {/* </Route> */}
+       
         <Route path="create-manager" element={<CreateManager />} />
         <Route path="create-trainer" element={<CreateTrainer />} />
         <Route path="create-client" element={<CreateClient/>} />
 
-        {/* <Route path="clients" element={<Clients appUser={appUser} appToken={appToken}/>} /> */}
-        {/* <Route
-          path="/clientProfile"
-          element={
-            // <ReqirePermission redirectTo="/login">
-              <ClientProfile user={appUser} />
-            // </ReqirePermission>
-          }
-        /> */}
 
-        <Route path="clients" element={<Clients />}>
-        </Route>
-        <Route path="clients/:clientId" element={<ClientProfile />}>
-          {/* <Route path="cards" element={<ClientProfileCards />} />
-          <Route path="info" element={<ClientProfileInfo />} />
-          <Route path="dashboard" element={<ClientProfileDashboard />} />
-          <Route path="*" element={<NotFound status={404} />} /> */}
-        </Route>
+        <Route path="clients" element={<Clients />}></Route>
+        <Route path="clients/:clientId" element={<ClientProfile />}></Route>
 
-
-        {/* <Route
-          path="/client-profile"
-          element={<ClientProfile user={appUser} />}
-        >
-          <Route index element={<ClientProfile />} />
-          <Route
-            path="cards"
-            element={<ClientProfileCards clentCard={clentCard} />}
-          />
-          <Route path="info" element={<ClientProfileInfo appUser={appUser} />} />
-          <Route path="dashboard" element={<ClientProfileDashboard />} />
-          <Route path="*" element={<NotFound />} />
-        </Route> */}
         <Route path="*" element={<NotFound status={404} />} />
       </Routes>
+      
       </TrainerContext.Provider>
       </AppUserContex.Provider>
       </AppTokenContext.Provider>

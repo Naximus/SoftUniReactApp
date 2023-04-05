@@ -66,14 +66,14 @@ const Header = ({ userType }) => {
                 userType === "manager"
                 ? 
                   <>
+                  <li>
+                      <Link to="/manager">Моя профил</Link>
+                    </li>
                     <li>
                       <Link to="/create-trainer">Създай треньор</Link>
                     </li>
                     <li>
                       <Link to="/trainers">Треньори</Link>
-                    </li>
-                    <li>
-                      <Link to="/manager">Manager Dashboard</Link>
                     </li>
                     <li>
                       <Link to="/create-client">Създай клиент</Link>

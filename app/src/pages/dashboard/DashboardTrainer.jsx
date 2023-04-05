@@ -42,6 +42,7 @@ const DashboardTrainer = () => {
         .catch((error) => {
             console.log("error: " + error);
             setError("User could not be authenticated");
+            navigate(`/login`);
             setIsLoading(false);
         });
     } 
