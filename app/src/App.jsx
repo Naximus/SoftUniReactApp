@@ -49,7 +49,6 @@ function App() {
   const loginHandler = (token, decodedToken) => {
     setAppToken(token);
     setAppUser(decodedToken);
-    console.log(decodedToken.type);
     // return <Dashboard appUser={appUser} />;
     return navigate(`/${decodedToken.type}`);
   };

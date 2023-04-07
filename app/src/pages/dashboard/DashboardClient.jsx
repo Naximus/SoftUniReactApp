@@ -8,7 +8,6 @@ import ClientProfile from "../client-profile/ClientProfile";
 import { useNavigate } from "react-router-dom";
 
 const DashboardClient = () => {
-  console.log("DashboardClient");
   const { appUser, setAppUser } = useContext(AppUserContex);
   const { appToken, setAppToken } = useContext(AppTokenContext);
   const { currentClient, setCurrentUser } = useContext(ClientContext);
@@ -17,13 +16,9 @@ const DashboardClient = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();
-  console.log("DashboardClient");
-  console.log(currentClient);
 
   useEffect(() => {
-    console.log("Use effecy");
     if (!currentClient) {
-      console.log('V ifa');
         setIsLoading(true);
         fetch(`${BASE_URL}/clients/${appUser._id}`, {
             method: "GET",
@@ -41,7 +36,6 @@ const DashboardClient = () => {
 
         })
         .catch((error) => {
-            console.log("error: " + error);
             setError("User could not be authenticated");
             navigate(`/login`);
             setIsLoading(false);

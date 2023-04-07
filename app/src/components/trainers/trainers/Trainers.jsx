@@ -30,12 +30,9 @@ const Trainers = () => {
         else return response.json();
       })
       .then((result) => {
-        console.log(result);
-        console.log(result.data);
         setTrainers(result.data);
       })
       .catch((error) => {
-        console.log("error: " + error);
         setError("User could not be authenticated");
       });
   }, []);

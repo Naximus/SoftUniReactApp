@@ -58,7 +58,6 @@ const CreateClient = () => {
   };
 
   const onSubmitHandler = async (e) => {
-    console.log(appToken);
     e.preventDefault();
     if (validateForm()) {
       // TODO make post request
@@ -79,7 +78,7 @@ const CreateClient = () => {
             const err = res.error
             throw new Error(err)
           }
-          else return response.json();
+          else return res;
         })
         .then((result) => {
           navigate("/");

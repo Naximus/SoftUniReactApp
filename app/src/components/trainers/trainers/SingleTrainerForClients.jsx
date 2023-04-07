@@ -8,7 +8,6 @@ import { Link, useNavigate } from "react-router-dom";
 const SingleTrainerForClients = ({
     trainer
 }) => {
-    console.log(trainer);
     // const {currentTrainer, setCurrentTrenier} = useContext(TrainerContext)
     const [isOpen, setIsOpen] = useState(false);
     const [openButton, setOpenButten] =useState("down")

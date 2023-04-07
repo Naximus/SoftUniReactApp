@@ -30,7 +30,6 @@ export const CardDetails = (
     const onSave = (e) => {
         // const paid = setPaidStatus === 'paid-card' ? false : true;
         const paid = paidStatus === 'paid-card' ? true : false;
-        console.log("Trainer" + "    " + appUser._id);
         const newCard = {
             type: card.type,
             start: selectedDate,

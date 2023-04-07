@@ -4,13 +4,11 @@ import { Link, Outlet, useLocation  } from 'react-router-dom';
 
 
 const ClientProfile = ({user}) => {
-    console.log(user);
     if (!user) {
         user = {};
     }
     let currentURL = useLocation();
     currentURL = currentURL.pathname;
-    console.log(currentURL);
 
     let infoTrue = true;
     let cardTrue = true;

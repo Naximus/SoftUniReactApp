@@ -2,7 +2,6 @@ import "./Header.scss";
 import { Link } from "react-router-dom";
 
 const Header = ({ userType }) => {
-  console.log(userType);
   const isAuth = userType !== "guest";
 
 

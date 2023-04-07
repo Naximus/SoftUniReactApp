@@ -14,7 +14,6 @@ export const EditClient = ({data}) => {
 
     const onSubmit = (e) => {
         e.preventDefault();
-        console.log(values);
     }
 
 

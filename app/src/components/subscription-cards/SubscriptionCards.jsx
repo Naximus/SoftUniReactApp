@@ -27,7 +27,6 @@ export const SubscriptionCards = ({
         active,
         trainings
     }
-    console.log(userRole);
     const { appToken, setAppToken } = useContext(AppTokenContext);
     const { currentClient, setCurrentUser } = useContext(ClientContext);
     const { appUser, setAppUser } = useContext(AppUserContex);
@@ -130,7 +129,6 @@ export const SubscriptionCards = ({
                 
             })
             .catch((error) => {
-              console.log("error: " + error);
               setClientArrived('icon-check-ring')
               setError("User could not be authenticated");
             });

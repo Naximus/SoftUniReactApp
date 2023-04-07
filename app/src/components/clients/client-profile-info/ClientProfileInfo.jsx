@@ -38,15 +38,15 @@ const ClientProfileInfo = ({userRole}) => {
     };
   
     const handleSave = async () => {
+
       // Send only edited fields to the backend
       if (isChaned) {
       
       const editedData = {};
       editedFields.forEach((field) => {
         editedData[field] = editedInfo[field];
-        console.log(editedInfo[field]);
       });
-
+       
         const [changedProperty, propertyValue] = Object.entries(editedData)[0];
         const reqProperty = changedProperty == "foodRegime" ? "food-regime" : changedProperty;
      
@@ -61,6 +61,7 @@ const ClientProfileInfo = ({userRole}) => {
         .then( async (response) => {
           const res = await response.json()
           if (!response.ok) {
+            console.log(res);
             const err = res.error
             throw new Error(err)
           }
@@ -68,12 +69,14 @@ const ClientProfileInfo = ({userRole}) => {
             const newData = editedInfo;
             setCurrentUser(newData);
             setEditedInfo(editedInfo);
-            return response.json()};
+            return res };
         })
         .catch((error) => {
+          console.log(error.message);
           setEditedInfo(currentClient);
-          setError("Емейла вече съществува");
+          setError(error.message);
           setShowError(true);
+
           // Hide error after 3 seconds
           setTimeout(() => {
             setShowError(false);

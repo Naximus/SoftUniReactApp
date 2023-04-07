@@ -58,7 +58,6 @@ const ClientProfile = () => {
                 else return response.json();
             })
             .then((result) => {
-                console.log(result.image);
                 setEditName(result.name);
                 setCurrentName(result.name);
                 setClientAvatar(result.image);
@@ -67,7 +66,6 @@ const ClientProfile = () => {
 
             })
             .catch((error) => {
-                console.log("error: " + error);
                 setError("User could not be authenticated");
                 setIsLoading(false);
             });
@@ -96,7 +94,6 @@ const ClientProfile = () => {
       }
       const handleSave = async () => {
         
-        // console.log(showError);
         if (editingName === "") {
           setError("Името е задължително");
           setShowError(true);
@@ -128,7 +125,6 @@ const ClientProfile = () => {
               }
             })
             .catch((error) => {
-              console.log("error: " + error);
               setError("User could not be authenticated");
             });
 

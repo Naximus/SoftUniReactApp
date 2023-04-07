@@ -28,12 +28,9 @@ const TrainersListForClients = () => {
         else return response.json();
       })
       .then((result) => {
-        console.log(result);
-        console.log(result.data);
         setTrainers(result.data);
       })
       .catch((error) => {
-        console.log("error: " + error);
         setError("User could not be authenticated");
       });
   }, []);
@@ -48,7 +45,6 @@ const TrainersListForClients = () => {
       // Filter the data based on the search query and searchKey
       return item[searchKey].toLowerCase().includes(query.toLowerCase());
     });
-    console.log(filteredData);
   // =============
 
     return (

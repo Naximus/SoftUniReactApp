@@ -10,8 +10,6 @@ const ReqirePermission = ({ children, redirectTo }) => {
   const location = useLocation();
 
   useEffect(() => {
-    console.log("isExpired: ", isExpired);
-    console.log("decodedToken: ", decodedToken);
     // TODO: Check if path allowed @server too.
     if (
       !decodedToken ||

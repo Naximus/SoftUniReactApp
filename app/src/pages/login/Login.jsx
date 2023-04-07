@@ -44,14 +44,10 @@ const Login = ({ user, onLogin }) => {
         })
         .then((result) => {
           localStorage.setItem(localStorageTokenName, result);
-          console.log(localStorage.getItem(localStorageTokenName) + "LocalStor");
-          console.log("result : ", result);
           const decodedToken = jwt_decode(result);
-          console.log(decodedToken);
           onLogin(result, decodedToken);
         })
         .catch((error) => {
-            console.log('error: ' + error);
           setError("User could not be authenticated");
         });
     }

@@ -25,11 +25,9 @@ const Clients = () => {
         else return response.json();
       })
       .then((result) => {
-        console.log(result);
         setClients(result.data);
       })
       .catch((error) => {
-        console.log("error: " + error);
         setError("User could not be authenticated");
       });
   }, []);

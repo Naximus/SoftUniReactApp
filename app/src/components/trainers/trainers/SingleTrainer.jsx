@@ -8,7 +8,6 @@ import { TrainerContext } from "../../../contexts/TrainerContext";
 const SingleTrainer = ({
     trainer
 }) => {
-    console.log(trainer);
     const {currentTrainer, setCurrentTrenier} = useContext(TrainerContext)
     const navigate = useNavigate();
 
@@ -16,7 +15,6 @@ const SingleTrainer = ({
    
     const onClickUser = () => {
             setCurrentTrenier(trainer)
-            console.log(trainer._id);
             navigate(`/trainers/${trainer._id}`);
         
     }

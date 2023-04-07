@@ -52,10 +52,8 @@ export const AddSubscriptionCard = () => {
     }
 
     const onChoseCard = (e) => {
-        // console.log(e.target.id);
         if (e.target.id === 'personalTen') {
             
-            console.log(personalTen);
             setSelectedCard(personalTen);
         } else if (e.target.id === 'groupTen') {
             setSelectedCard(groupTen);

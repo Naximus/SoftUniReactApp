@@ -8,7 +8,6 @@ import { BASE_URL } from "../../api/config";
 
 const DashboardTrainer = () => {
 
-  console.log("DashboardTrainer");
   const { appUser, setAppUser } = useContext(AppUserContex);
   const { appToken, setAppToken } = useContext(AppTokenContext);
   const { currentTrainer, setCurrentTrenier  } = useContext(TrainerContext);
@@ -20,9 +19,7 @@ const DashboardTrainer = () => {
 
   useEffect(() => {
     if (!currentTrainer) {
-      console.log('V ifa');
         setIsLoading(true);
-        console.log(appUser._id);
         fetch(`${BASE_URL}/trainers/${appUser._id}`, {
             method: "GET",
             headers: { "content-type": "application/json", "X-Authorization" :  appToken},
@@ -33,14 +30,12 @@ const DashboardTrainer = () => {
             else return response.json();
         })
         .then((result) => {
-            console.log(result);
             setCurrentTrenier(result);
             setIsLoading(false);
             navigate(`/trainers/${result._id}`);
 
         })
         .catch((error) => {
-            console.log("error: " + error);
             setError("User could not be authenticated");
             navigate(`/login`);
             setIsLoading(false);

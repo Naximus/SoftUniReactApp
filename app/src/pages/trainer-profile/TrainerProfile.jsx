@@ -51,7 +51,6 @@ const TrainerProfile = () => {
                 else return response.json();
             })
             .then((result) => {
-                console.log(result);
                 setEditName(result.name);
                 setCurrentName(result.name);
                 setClientAvatar(result.image);
@@ -60,7 +59,6 @@ const TrainerProfile = () => {
 
             })
             .catch((error) => {
-                console.log("error: " + error);
                 setError("User could not be authenticated");
                 setIsLoading(false);
             });
@@ -113,7 +111,6 @@ const TrainerProfile = () => {
               }
             })
             .catch((error) => {
-              console.log("error: " + error);
               setError("User could not be authenticated");
             });
 

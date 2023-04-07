@@ -76,7 +76,7 @@ const CreateTrainer = () => {
             const err = res.error
             throw new Error(err)
           }
-          else return response.json();
+          else return res;
         })
         .then((result) => {
           navigate("/");

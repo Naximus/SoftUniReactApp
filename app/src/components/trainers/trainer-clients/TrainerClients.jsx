@@ -20,7 +20,6 @@ export const TrainerClients = () => {
   // =============
 
   const creatorId = currentTrainer._id;
-  console.log(creatorId);
 
   useEffect(() => {
     fetch(`${BASE_URL}/trainers/${creatorId}/clients`, {
@@ -33,12 +32,9 @@ export const TrainerClients = () => {
         else return response.json();
       })
       .then((result) => {
-        console.log(result);
-        console.log(result.data);
         setClients(result.data);
       })
       .catch((error) => {
-        console.log("error: " + error);
         setError("User could not be authenticated");
       });
   }, []);

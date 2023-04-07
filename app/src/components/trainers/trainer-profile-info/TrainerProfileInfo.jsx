@@ -6,6 +6,8 @@ import { TrainerContext } from "../../../contexts/TrainerContext";
 const TrainerProfileInfo = ({userRole}) => {
     const { appToken, setAppToken } = useContext(AppTokenContext);
     const { currentTrainer, setCurrentTrenier  } = useContext(TrainerContext);
+    // Error set
+    const [showError, setShowError] = useState(false);
     const [error, setError] = useState(undefined);
 
     const [editedInfo, setEditedInfo] = useState(currentTrainer);
@@ -47,15 +49,12 @@ const TrainerProfileInfo = ({userRole}) => {
       const editedData = {};
       editedFields.forEach((field) => {
         editedData[field] = editedInfo[field];
-        console.log(editedInfo[field]);
       });
 
         const [changedProperty, propertyValue] = Object.entries(editedData)[0];
-        console.log(changedProperty, propertyValue);
 
         const reqProperty = changedProperty == "foodRegime" ? "food-regime" : changedProperty;
 
-      console.log(editedInfo);
       await fetch(`${BASE_URL}/trainers/${clientId}/${reqProperty}`, {
         method: "PUT",
         headers: { "content-type": "application/json", "X-Authorization" :  appToken},
@@ -64,17 +63,36 @@ const TrainerProfileInfo = ({userRole}) => {
             [changedProperty]: propertyValue,
         }),
       })
-        .then((response) => {
-          if (!response.ok) throw new Error(response.status);
+        .then(async (response) => {
+          const res = await response.json()
+          if (!response.ok) {
+            const err = res.error
+            throw new Error(err);
+          }
           else {
-            
             setCurrentTrenier(editedInfo);
-            return response.json();
+            setEditedInfo(editedInfo);
+
+            setIsPhoneEditing(false);
+            setIsEmailEditing(false);
+            setIsTargetEditing(false);
+            setIsNotesEditing(false);
+            setIsRegimeEditing(false);
+
+            
+            return res;
           }
         })
         .catch((error) => {
-          console.log("error: " + error);
-          setError("User could not be authenticated");
+          setCurrentTrenier(currentTrainer)
+          setError(error.message);
+          setShowError(true);
+
+          // Hide error after 3 seconds
+          setTimeout(() => {
+            setShowError(false);
+            setError(undefined)
+          }, 3000);
         });
 
 
@@ -82,16 +100,15 @@ const TrainerProfileInfo = ({userRole}) => {
 
 
 
-      console.log(editedData);
       // Update the current client with edited info
-      setEditedInfo(editedInfo);
+      // setEditedInfo(editedInfo);
       
     }
-    setIsPhoneEditing(false);
-    setIsEmailEditing(false);
-    setIsTargetEditing(false);
-    setIsNotesEditing(false);
-    setIsRegimeEditing(false);
+    // setIsPhoneEditing(false);
+    // setIsEmailEditing(false);
+    // setIsTargetEditing(false);
+    // setIsNotesEditing(false);
+    // setIsRegimeEditing(false);
     };
   
     const handleCancel = () => {
@@ -111,6 +128,7 @@ const TrainerProfileInfo = ({userRole}) => {
     return (
       <>
         <ul className="main-box">
+        {error ? <div className="error">{error}</div> : null}
         {["admin", "trainer", "manager"].includes(userRole) &&
               <li>
               <div className="icon-phone inline-icons"></div>

@@ -43,7 +43,6 @@ function AvatarPicker({
 
     const onSaveAvatar = async () => {
             if (prevClientAvatar.current !== selectedAvatar) {
-                console.log("VAV FETCHA pravi zaqvka");
                 // fetch data here
                 await fetch(`${BASE_URL}/${reqPath}/${clientId}/image`, {
                 method: "PUT",
@@ -62,7 +61,6 @@ function AvatarPicker({
                   }
                 })
                 .catch((error) => {
-                  console.log("error: " + error);
                   setError("User could not be authenticated");
                 });
               

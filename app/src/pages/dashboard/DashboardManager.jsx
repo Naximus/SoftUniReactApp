@@ -46,7 +46,6 @@ const DashboardManager = () => {
 }, [appUser, setAppUser,  appToken]);
 
 
-  // console.log(appUser);
 
   return (
     <ManagerProfile />

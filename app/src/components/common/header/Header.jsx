@@ -5,7 +5,6 @@ import hamburger  from '../../../assets/icons/menu_white.png'
 // import { ReactComponent as Brand } from '../../../assets/icons/menu_white.png'
 
 const Header = ({ userType }) => {
-  console.log(userType);
   const isAuth = userType !== "guest";
 
 

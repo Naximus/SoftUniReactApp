@@ -39,7 +39,7 @@ const ClientProfileCards = ({userRole}) => {
           setClientCards(result.data);
         })
         .catch((error) => {
-          console.log("error: " + error);
+          
           setError("User could not be authenticated");
         });
     }, []);
@@ -48,8 +48,8 @@ const ClientProfileCards = ({userRole}) => {
     // -------------------------------------
     const navigate = useNavigate();
     const onSaveCard = async (newCard) => {
-        // TODO Send data to API and redirect to /client-profile/cards
-        console.log(newCard);
+        
+        
         
         
         const result = await fetch(`${BASE_URL}/clients/${clientId}/cards`, {
@@ -76,7 +76,6 @@ const ClientProfileCards = ({userRole}) => {
               navigate(`/clients/${clientId}`);
             })
             .catch((error) => {
-              console.log("error: " + error);
               setError("User could not be authenticated");
             });
 
@@ -120,7 +119,7 @@ const ClientProfileCards = ({userRole}) => {
                   navigate(`/clients/${clientId}`);
                 })
                 .catch((error) => {
-                  console.log("error: " + error);
+                  
                   setError("User could not be authenticated");
                 });
     
@@ -148,7 +147,7 @@ const ClientProfileCards = ({userRole}) => {
                   navigate(`/clients/${clientId}`);
                 })
                 .catch((error) => {
-                  console.log("error: " + error);
+                  
                   setError("User could not be authenticated");
                 });
     

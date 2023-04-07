@@ -22,7 +22,6 @@ const CreateManager = () => {
   };
 
   const onSubmitHandler = async (e) => {
-    console.log(appToken);
     e.preventDefault();
     if (isValid) {
       // TODO make post request
@@ -45,7 +44,6 @@ const CreateManager = () => {
           navigate("/");
         })
         .catch((error) => {
-          console.log("error: " + error);
           setError("User could not be authenticated");
         });
     }
