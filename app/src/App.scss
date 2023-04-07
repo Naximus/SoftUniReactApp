@@ -110,7 +110,10 @@ body {
   background: #2B2A39;
 }
 
-
+.error {
+  font-size: $font-size-normal;
+  color: #F00;
+}
 // Login Style
 .login {
   @include flexCenter(column, $main-backgound-color);
@@ -221,7 +224,7 @@ button { cursor: pointer; }
   }
   .client-profile-info {
     width: 100%;
-    overflow: scroll;
+    // overflow: scroll;
     overflow: overlay;
     ul {
       @include flexStart(column, null);

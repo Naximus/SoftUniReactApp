@@ -105,22 +105,12 @@ function App() {
         <Route path="manager/:manager" element={<ManagerProfile />}></Route>
 
 
-
-
         <Route path="client/:clientId" element={<ClientProfile />}></Route>
 
         <Route path="/trainers-for-clients" element={<TrainersListForClients />} />
         <Route path="/trainers" element={<Trainers />} />
         <Route path="trainers/:trainerId" element={<TrainerProfile />}></Route>
     
-        {/* <Route
-          path="/clients"
-          element={
-            // <ReqirePermission redirectTo="/login">
-            <Clients appUser={appUser} appToken={appToken} />
-            // </ReqirePermission>
-          }
-        /> */}
         <Route path="/logout" element={<Logout onLogout={logoutHandler} />} />
        
         <Route path="create-manager" element={<CreateManager />} />

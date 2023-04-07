@@ -7,6 +7,8 @@ const ClientProfileInfo = ({userRole}) => {
     const { appToken, setAppToken } = useContext(AppTokenContext);
     const { currentClient, setCurrentUser } = useContext(ClientContext);
 
+    // Error set
+    const [showError, setShowError] = useState(false);
     const [error, setError] = useState(undefined);
 
     const [editedInfo, setEditedInfo] = useState(currentClient);
@@ -19,6 +21,8 @@ const ClientProfileInfo = ({userRole}) => {
 
     const [editedFields, setEditedFields] = useState([]);
     const [isChaned, setIsChanged] = useState(false);
+
+    
 
     const clientId = currentClient._id;
 
@@ -36,7 +40,6 @@ const ClientProfileInfo = ({userRole}) => {
     const handleSave = async () => {
       // Send only edited fields to the backend
       if (isChaned) {
-        
       
       const editedData = {};
       editedFields.forEach((field) => {
@@ -45,10 +48,8 @@ const ClientProfileInfo = ({userRole}) => {
       });
 
         const [changedProperty, propertyValue] = Object.entries(editedData)[0];
-        console.log(changedProperty, propertyValue);
-
         const reqProperty = changedProperty == "foodRegime" ? "food-regime" : changedProperty;
-
+     
       await fetch(`${BASE_URL}/clients/${clientId}/${reqProperty}`, {
         method: "PUT",
         headers: { "content-type": "application/json", "X-Authorization" :  appToken},
@@ -57,28 +58,29 @@ const ClientProfileInfo = ({userRole}) => {
             [changedProperty]: propertyValue,
         }),
       })
-        .then((response) => {
-          if (!response.ok) throw new Error(response.status);
+        .then( async (response) => {
+          const res = await response.json()
+          if (!response.ok) {
+            const err = res.error
+            throw new Error(err)
+          }
           else {
-            
             const newData = editedInfo;
             setCurrentUser(newData);
-            console.log(newData);
+            setEditedInfo(editedInfo);
             return response.json()};
         })
         .catch((error) => {
-          console.log("error: " + error);
-          setError("User could not be authenticated");
+          setEditedInfo(currentClient);
+          setError("Емейла вече съществува");
+          setShowError(true);
+          // Hide error after 3 seconds
+          setTimeout(() => {
+            setShowError(false);
+            setError(undefined)
+          }, 3000);
         });
 
-
-
-
-
-
-      console.log(editedData);
-      // Update the current client with edited info
-      setEditedInfo(editedInfo);
       
     }
     setIsPhoneEditing(false);
@@ -98,19 +100,13 @@ const ClientProfileInfo = ({userRole}) => {
       setIsRegimeEditing(false);
     };
     
-    console.log("=========================");
-    console.log(editedInfo);
-    console.log(currentClient);
-    console.log(currentClient.created);
-    console.log(currentClient.created.substring(0, 10));
-    console.log("=========================");
-
     const dateStr = currentClient.created;
     const date = dateStr.substring(0, 10);
   
     return (
       <>
         <ul className="main-box">
+        {error ? <div className="error">{error}</div> : null}
         {["admin", "trainer", "manager"].includes(userRole) &&
               <li>
               <div className="icon-phone inline-icons"></div>

@@ -7,7 +7,6 @@ const CreateClient = () => {
   const navigate = useNavigate();
   const { appToken, setAppToken } = useContext(AppTokenContext)
   
-  console.log(appToken);
   const [values, setValues] = useState({
     name: "",
     username: "",
@@ -16,6 +15,41 @@ const CreateClient = () => {
   });
   const [isValid, setIsValid] = useState(false);
   const [error, setError] = useState(undefined);
+  const [showError, setShowError] = useState(true);
+
+
+  // ==========================================
+  const [validationErrors, setValidationErrors] = useState({});
+  const validateForm = () => {
+    const errors = {};
+  
+    if (!values.name.trim()) {
+      errors.name = "Името на треньора е задължително";
+    }
+  
+    if (!values.password.trim()) {
+      errors.password = "Паролата е задължителна";
+    }
+  
+    if (!values.email.trim()) {
+      errors.email = "Имейлът е задължителен";
+    } else if (!/\S+@\S+\.\S+/.test(values.email)) {
+      errors.email = "Невалиден имейл адрес";
+    }
+  
+    setValidationErrors(errors);
+
+    setShowError(true);
+    // Hide error after 3 seconds
+    setTimeout(() => {
+      setShowError(false);
+      setValidationErrors({});
+    }, 3000);
+
+    return Object.keys(errors).length === 0;
+  };
+  // ==========================================
+
 
   const onChangeHandler = (e) => {
     setValues((state) => ({ ...state, [e.target.name]: e.target.value }));
@@ -26,7 +60,7 @@ const CreateClient = () => {
   const onSubmitHandler = async (e) => {
     console.log(appToken);
     e.preventDefault();
-    if (isValid) {
+    if (validateForm()) {
       // TODO make post request
       const result = await fetch(`${BASE_URL}/clients`, {
         method: "POST",
@@ -39,16 +73,26 @@ const CreateClient = () => {
           name: values.name,
         }),
       })
-        .then((response) => {
-          if (!response.ok) throw new Error(response.status);
+        .then(async (response) => {
+          const res = await response.json()
+          if (!response.ok) {
+            const err = res.error
+            throw new Error(err)
+          }
           else return response.json();
         })
         .then((result) => {
           navigate("/");
         })
         .catch((error) => {
-          console.log("error: " + error);
-          setError("User could not be authenticated");
+          setError(error.message);
+          setShowError(true);
+          // Hide error after 3 seconds
+          setTimeout(() => {
+            setShowError(false);
+            setError(undefined)
+          }, 3000);
+
         });
     }
   };
@@ -73,7 +117,7 @@ const CreateClient = () => {
               placeholder="Име на клиента"
             />
           </div>
-
+          {validationErrors.name && <div className="error">{validationErrors.name}</div>}
           <div className="input-holder">
             <label
               htmlFor="clientEmail"
@@ -88,7 +132,7 @@ const CreateClient = () => {
               placeholder="Email"
             />
           </div>
-
+          {validationErrors.email && <div className="error">{validationErrors.email}</div>}
           <div className="input-holder">
             <label
               htmlFor="ClienUsername"
@@ -119,7 +163,7 @@ const CreateClient = () => {
             />
           </div>
         </div>
-
+        {validationErrors.password && <div className="error">{validationErrors.password}</div>}
         <button type="submit" className="btn-only-text-outline-small">
           Запази
         </button>

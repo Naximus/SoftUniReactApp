@@ -8,7 +8,6 @@ import { BASE_URL } from "../../api/config";
 import ManagerProfile from "../manager-profile/ManagerProfile";
 
 const DashboardManager = () => {
-  console.log('DashboardManager');
   const { appUser, setAppUser } = useContext(AppUserContex);
   const { appToken, setAppToken } = useContext(AppTokenContext);
   // const { currentTrainer, setCurrentTrenier  } = useContext(TrainerContext);
@@ -20,9 +19,7 @@ const DashboardManager = () => {
 
   useEffect(() => {
     if (!appUser) {
-      console.log('V ifa');
         setIsLoading(true);
-        console.log(appUser._id);
         fetch(`${BASE_URL}/manager/${appUser._id}`, {
             method: "GET",
             headers: { "content-type": "application/json", "X-Authorization" :  appToken},
@@ -33,14 +30,12 @@ const DashboardManager = () => {
             else return response.json();
         })
         .then((result) => {
-            console.log(result);
             setAppUser(result);
             setIsLoading(false);
             navigate(`/manager/${result._id}`);
 
         })
         .catch((error) => {
-            console.log("error: " + error);
             setError("User could not be authenticated");
             navigate(`/login`);
             setIsLoading(false);
@@ -51,7 +46,7 @@ const DashboardManager = () => {
 }, [appUser, setAppUser,  appToken]);
 
 
-  console.log(appUser);
+  // console.log(appUser);
 
   return (
     <ManagerProfile />

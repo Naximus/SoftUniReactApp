@@ -17,6 +17,9 @@ export const EditSubscriptionCard = (
     const { appToken, setAppToken } = useContext(AppTokenContext);
     const {onUpdateCard, deleteSelectedCard, clientId} = useContext(CreateCardConext);
 
+    const [error, setError] = useState(undefined);
+    const [showError, setShowError] = useState(false);
+
     const startDate = parseISO(cartData.start);
     const endDate = parseISO(cartData.end);
 
@@ -35,16 +38,26 @@ export const EditSubscriptionCard = (
     const onSave = (e) => {
         // const paid = setPaidStatus === 'paid-card' ? false : true;
         const paid = paidStatus === 'paid-card' ? true : false;
+        if(selectedDate < selectedEndDate) { 
+            const updatedCard = {
+                _id: cartData._id,
+                start: selectedDate,
+                end: selectedEndDate,
+                trainingsLeft: cartData.trainingsLeft,
+                paid: paid
+            }
+            const _id = cartData._id;
+            onUpdateCard(_id, updatedCard);
+            handleCardClose();
+         } else {
+            setError('Невалидна дата');
+            setShowError(true);
+            setTimeout(() => {
+                setShowError(false);
+                setError(undefined);
+            }, 5000);
+         }
         
-        const updatedCard = {
-            _id: cartData._id,
-            start: selectedDate,
-            end: selectedEndDate,
-            trainingsLeft: cartData.trainingsLeft,
-            paid: paid
-        }
-        const _id = cartData._id;
-        onUpdateCard(_id, updatedCard);
     }
        
     const handleCardClose = () => {
@@ -61,6 +74,7 @@ export const EditSubscriptionCard = (
 
                     </div>
                 </div>
+                {error ? <div className="error">{error}</div> : null}
                 <div className="card-middle-part">
                     <div>
                         <h4>Начална<br/>дата</h4>
@@ -85,7 +99,7 @@ export const EditSubscriptionCard = (
                     <div className='row-icons icon-close-ring' onClick={handleCardClose} ></div>
                     <div className='row-icons icon-save' onClick={() => {
                         onSave();
-                        handleCardClose();
+                        // handleCardClose();
                         }} ></div>
                     <div className='row-icons icon-trash' onClick={() => {
                         deleteSelectedCard(cartData._id);

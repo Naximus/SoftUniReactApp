@@ -33,13 +33,17 @@ const ClientProfile = () => {
     const [clientAvatar, setClientAvatar] = useState(avatarImage);
     const [isOpen, setIsOpen] = useState(false);
 
+    // Error set
+    const [showError, setShowError] = useState(false);
+
+  // ==========================================
 
     // 
     const userId = useParams(":userId");
     let clientId = userId.clientId;
 
     // 
-    // let clientId = appUser._id;
+  
 
     useEffect(() => {
         if (!currentClient) {
@@ -91,10 +95,18 @@ const ClientProfile = () => {
         setIsEditingName(true)
       }
       const handleSave = async () => {
-        // setCurrentName(editingName);
         
-
-        if (currentName !== editingName) {
+        // console.log(showError);
+        if (editingName === "") {
+          setError("Името е задължително");
+          setShowError(true);
+          // Hide error after 3 seconds
+          setTimeout(() => {
+            setShowError(false);
+            setError(undefined);
+          }, 3000);
+        }
+       else if (currentName !== editingName) {
 
           // fetch data here
           await fetch(`${BASE_URL}/clients/${clientId}/name`, {
@@ -111,6 +123,7 @@ const ClientProfile = () => {
                 const responseName = response.name;
                 setCurrentName(responseName);
                 setCurrentName(editingName);
+                setIsEditingName(false);
                 return response.json();
               }
             })
@@ -119,9 +132,11 @@ const ClientProfile = () => {
               setError("User could not be authenticated");
             });
 
+        } else {
+          setIsEditingName(false);
         }
 
-        setIsEditingName(false);
+        // setIsEditingName(false);
       }
       const handleCancel = () => {
         setIsEditingName(false);
@@ -136,6 +151,7 @@ const ClientProfile = () => {
         }
         
         <main className="client-profile mobile-pages">
+            {error ? <div className="error">{error}</div> : null}
             <div className="client-header">
                 {/* {["admin", "trainer", "manager"].includes(userRole) && */}
                     <div className="row-icons icon-edit" onClick={handleClick} ></div>

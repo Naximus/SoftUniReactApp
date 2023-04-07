@@ -1,4 +1,5 @@
-import styles from './ManagerProfile.module.scss';
+// import styles from './ManagerProfile.module.scss';
+import "./ManagerProfile.scss";
 import { useContext, useEffect, useState } from "react";
 import { AppTokenContext } from "../../contexts/AppTokenContext";
 import { BASE_URL } from "../../api/config";
@@ -29,12 +30,10 @@ const ManagerProfile = () => {
           else return response.json();
         })
         .then((result) => {
-          console.log(result);
           setClients(result.data);
           setActiveClients(result.count)
         })
         .catch((error) => {
-          console.log("error: " + error);
           setError("User could not be authenticated");
         });
     }, [] );
@@ -50,12 +49,9 @@ const ManagerProfile = () => {
             else return response.json();
           })
           .then((result) => {
-            console.log(result);
-            // setClients(result.data);
             setActiveCards(result.count)
           })
           .catch((error) => {
-            console.log("error: " + error);
             setError("User could not be authenticated");
           });
       }, [] );
@@ -63,20 +59,30 @@ const ManagerProfile = () => {
 
     return (
         <>
-            <h1>ОБЩА ИНФОРМАЦИЯ</h1>
-            <div className={styles.circleWrap}>
-                <div className={styles.circle}>
-                <div className={[styles.mask, styles.full].join(' ')}>
-                    <div className={styles.fill}></div>
-                </div>
-                <div className={[styles.mask, styles.half].join(' ')}>
-                    <div className={styles.fill}></div>
-                </div>
-                <div className={styles.insideCircle}> {activeCards} </div>
+            <div className="manager-profile">
+                <h1>ИНФОРМАЦИЯ</h1>
+                
+                <div className="container-progressbars">
+                    <div>
+                        <h2>Активни карти</h2>
+                        <div className="progressbar">
+                            <svg className="progressbar-svg">
+                                <circle cx="80" cy="80" r="70" className="progressbar-svg-circle circle-cards shadow-cards"> </circle>
+                            </svg>
+                            <span className="progressbar-text shadow-cards">{activeCards}</span>
+                        </div>
+                    </div>
+                    <div>
+                        <h2>Активни клиенти</h2>
+                        <div className="progressbar">
+                            <svg className="progressbar-svg">
+                                <circle cx="80" cy="80" r="70" className="progressbar-svg-circle circle-clients shadow-clients"> </circle>
+                            </svg>
+                            <span className="progressbar-text shadow-clients">{activeClients}</span>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div className={styles.counter}>{activeClients}</div>
-            <div className={styles.counter}>{activeCards}</div>
         </>
     )
 }
