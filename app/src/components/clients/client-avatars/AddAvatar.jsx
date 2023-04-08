@@ -12,7 +12,7 @@ function AvatarPicker({
     ) {
 
   const { appToken, setAppToken } = useContext(AppTokenContext);
-  const { currentClient, setCurrentClient } = useContext(ClientContext);
+  const { currentClient, setCurrentUser } = useContext(ClientContext);
   const { currentTrainer, setCurrentTrenier  } = useContext(TrainerContext);
   const [error, setError] = useState(undefined);
 
@@ -52,12 +52,21 @@ function AvatarPicker({
                   image: selectedAvatar,
                 }),
               })
-                .then((response) => {
-                  if (!response.ok) throw new Error(response.status);
+                .then(async (response) => {
+                  const res = await response.json()
+                  if (!response.ok) {
+                    const err = res.error;
+                    throw new Error(err);
+                  }
                   else {
                     prevClientAvatar.current = clientAvatar;
                     setClientAvatar(selectedAvatar);
-                    return response.json();
+                    if (res.type === "trainer") {
+                      setCurrentTrenier(res);
+                    } else if  (res.type === "client"){
+                      setCurrentUser(res);
+                    }
+                    return res;
                   }
                 })
                 .catch((error) => {

@@ -2,11 +2,13 @@ import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { BASE_URL } from "../../../api/config";
 import { AppTokenContext } from "../../../contexts/AppTokenContext";
+import { ClientContext } from "../../../contexts/ClientContext";
 
 const CreateClient = () => {
   const navigate = useNavigate();
   const { appToken, setAppToken } = useContext(AppTokenContext)
-  
+  const { currentClient, setCurrentUser } = useContext(ClientContext);
+
   const [values, setValues] = useState({
     name: "",
     username: "",
@@ -61,6 +63,7 @@ const CreateClient = () => {
     e.preventDefault();
     if (validateForm()) {
       // TODO make post request
+      console.log("Create new client");
       const result = await fetch(`${BASE_URL}/clients`, {
         method: "POST",
         headers: { "content-type": "application/json", "X-Authorization" :  appToken},
@@ -81,7 +84,10 @@ const CreateClient = () => {
           else return res;
         })
         .then((result) => {
-          navigate("/");
+          const id = result._id;
+          console.log(id);
+          setCurrentUser(result)
+          navigate(`/clients/${id}`);
         })
         .catch((error) => {
           setError(error.message);

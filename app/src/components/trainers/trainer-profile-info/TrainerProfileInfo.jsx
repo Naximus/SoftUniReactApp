@@ -38,14 +38,13 @@ const TrainerProfileInfo = ({userRole}) => {
         ...editedInfo,
         [name]: value
       });
-      setEditedFields((prevFields) => [...prevFields, name]);
+      // setEditedFields((prevFields) => [...prevFields, name]);
+      setEditedFields([name]);
     };
   
     const handleSave = async () => {
       // Send only edited fields to the backend
-      if (isChaned) {
-        
-      
+      // if (isChaned) {
       const editedData = {};
       editedFields.forEach((field) => {
         editedData[field] = editedInfo[field];
@@ -70,6 +69,8 @@ const TrainerProfileInfo = ({userRole}) => {
             throw new Error(err);
           }
           else {
+            // console.log(res, editedInfo);
+            console.log(changedProperty, propertyValue);
             setCurrentTrenier(editedInfo);
             setEditedInfo(editedInfo);
 
@@ -103,7 +104,7 @@ const TrainerProfileInfo = ({userRole}) => {
       // Update the current client with edited info
       // setEditedInfo(editedInfo);
       
-    }
+    // }
     // setIsPhoneEditing(false);
     // setIsEmailEditing(false);
     // setIsTargetEditing(false);
@@ -184,7 +185,7 @@ const TrainerProfileInfo = ({userRole}) => {
               </div>
             ) : (
               <>
-                <textarea  className="text-holder" type="text" name="target" rows="12" cols="50" value={editedInfo.target || ""} onChange={handleInputChange} />
+                <textarea  className="text-holder" type="text" name="target" rows="12" cols="50" value={editedInfo.target || ""} onChange={ handleInputChange } />
                 <div className="change-button-holder">
                   <div className="row-icons icon-save"  onClick={handleSave}></div>
                   <div className="row-icons icon-close-ring" onClick={handleCancel}></div>

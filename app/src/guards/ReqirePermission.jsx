@@ -1,24 +1,25 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import Cookies from "js-cookie";
-import { useJwt } from "react-jwt";
 
-const ReqirePermission = ({ children, redirectTo }) => {
-  const token = Cookies.get("fa_user");
-  const { decodedToken, isExpired } = useJwt(token);
+import { AppUserContex } from "../contexts/AppUserContext";
+
+const ReqirePermission = ({ children, redirectTo, allowedFor }) => {
+
+  const { appUser, setAppUser } = useContext(AppUserContex);
+ 
   const navigate = useNavigate();
   const location = useLocation();
 
   useEffect(() => {
     // TODO: Check if path allowed @server too.
     if (
-      !decodedToken ||
-      isExpired ||
-      !decodedToken.allowedPaths.includes(location.pathname)
+      !appUser ||
+      // isExpired ||
+      !allowedFor.includes(appUser.type)
     ) {
       navigate(redirectTo);
     }
-  }, [location.pathname, decodedToken, isExpired, redirectTo]);
+  }, [appUser, redirectTo]);
   return children;
 };
 

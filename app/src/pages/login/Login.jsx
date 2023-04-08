@@ -1,6 +1,9 @@
 import { React, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+import "./Login.scss";
+
+
 import { BASE_URL } from "../../api/config";
 import { localStorageTokenName } from "../../config";
 import jwt_decode from "jwt-decode";
@@ -15,16 +18,37 @@ const Login = ({ user, onLogin }) => {
   const [password, setPassword] = useState("");
   const [isValid, setIsValid] = useState(false);
   const [error, setError] = useState(undefined);
+  const [showError, setShowError] = useState(false);
 //   const navigate = useNavigate();
 
   const inputUsernameOrEmailOnChangeHandler = (e) => {
-    setUsernameOrEmail(e.target.value);
-    setIsValid(true); // TODO add validation
+    if (e.target.value === "") {
+      setError("Email и паролата са задължителени полета");
+      setIsValid(false);
+      setTimeout(() => {
+        setShowError(false);
+        setError(undefined)
+      }, 3000);
+    } else {
+      setUsernameOrEmail(e.target.value);
+      setIsValid(true);
+    }
   };
 
   const inputPasswordOnChangeHandler = (e) => {
-    setPassword(e.target.value);
-    setIsValid(true); // TODO add validation
+    if (e.target.value === "") {
+      setError("Email и паролата са задължителени полета");
+      setIsValid(false);
+      setTimeout(() => {
+        setShowError(false);
+        setError(undefined)
+      }, 3000);
+    } else {
+      setPassword(e.target.value);
+      setIsValid(true);
+    }
+
+   
   };
 
   const onSubmitHandler = async (e) => {
@@ -38,9 +62,13 @@ const Login = ({ user, onLogin }) => {
         mode: "cors",
         body: JSON.stringify({ usernameOrEmail, password }),
       })
-        .then((response) => {
-          if (!response.ok) throw new Error(response.status);
-          else return response.json();
+        .then( async (response) => {
+          const res = await response.json();
+          if (!response.ok) {
+            const err = res.error
+            throw new Error(err);
+          }
+          else return res;
         })
         .then((result) => {
           localStorage.setItem(localStorageTokenName, result);
@@ -48,16 +76,29 @@ const Login = ({ user, onLogin }) => {
           onLogin(result, decodedToken);
         })
         .catch((error) => {
-          setError("User could not be authenticated");
+          setError(error.message);
+          setShowError(true);
+
+          setTimeout(() => {
+            setShowError(false);
+            setError(undefined)
+          }, 3000);
+
         });
+    } else {
+      // Hide error after 3 seconds
+      setTimeout(() => {
+        setShowError(false);
+        setError(undefined)
+      }, 3000);
     }
   };
 
   return (
     <main className="login mobile-pages">
-      {error ? <div className="error">{error}</div> : null}
       <div className="login-form main-box">
         <img className="login-form-alfa-logo" src={alfaLogo} />
+        {error ? <div className="error">{error}</div> : null}
         <div className="input-box">
           <label htmlFor="username-email" className="input-box-title">
             Име или имейл

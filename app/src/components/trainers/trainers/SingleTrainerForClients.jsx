@@ -15,7 +15,7 @@ const SingleTrainerForClients = ({
         !isOpen ? setIsOpen(true) : setIsOpen(false);
         openButton === "down" ? setOpenButten("up") : setOpenButten("down");
     }
-
+    
     return (
             <div className="trainers-holder">
                 
@@ -37,7 +37,8 @@ const SingleTrainerForClients = ({
                     <div>
                         {isOpen && <p>{trainer.foodRegime}</p>}
                     </div>
-                    <div className={`row-icons icon-expand-${openButton}`} onClick={toggle}> </div>
+
+                    {(trainer.foodRegime && trainer.foodRegime.length > 0)  && <div className={`row-icons icon-expand-${openButton}`} onClick={toggle}> </div>}
             </div>
         
     )

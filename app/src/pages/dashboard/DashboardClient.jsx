@@ -7,7 +7,7 @@ import { ClientContext } from "../../contexts/ClientContext";
 import ClientProfile from "../client-profile/ClientProfile";
 import { useNavigate } from "react-router-dom";
 
-const DashboardClient = () => {
+const DashboardClient = ({user}) => {
   const { appUser, setAppUser } = useContext(AppUserContex);
   const { appToken, setAppToken } = useContext(AppTokenContext);
   const { currentClient, setCurrentUser } = useContext(ClientContext);
@@ -16,9 +16,9 @@ const DashboardClient = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();
-
+  
   useEffect(() => {
-    if (!currentClient) {
+    
         setIsLoading(true);
         fetch(`${BASE_URL}/clients/${appUser._id}`, {
             method: "GET",
@@ -40,7 +40,6 @@ const DashboardClient = () => {
             navigate(`/login`);
             setIsLoading(false);
         });
-    } 
    
     
 }, [currentClient, setCurrentUser,  appToken]);

@@ -1,0 +1,70 @@
+@import '../../styles/components.scss';
+@import '../../styles/mixin.scss';
+@import '../../styles/variables.scss';
+
+// Login Style
+.login {
+    @include flexCenter(column, $main-backgound-color);
+    margin-top: 3rem;
+    
+    .login-form {
+      @include flexCenter(column, $main-box-color);
+      
+      animation: white 5s infinite;
+  
+      .login-form-alfa-logo {
+        width: 12rem;
+        margin-bottom: $margin-between-main-group-elements;
+        margin-top: $margin-between-main-group-elements;
+      }
+      .input-box{
+        @include flexCenter(column, $secondary-box-color);
+        width: 100%;
+        margin: 1rem;
+        border-radius: 1.5rem;
+        
+        backdrop-filter: blur(17.5px);
+  
+        .input-box-title {
+          font-size: 2rem;
+          margin-top: 1rem;
+        }
+  
+        .input-holder{
+          width: 100%;
+          margin-top: 1rem;
+          margin-bottom: 2rem;
+          padding-left: 1rem;
+          padding-right: 1rem;
+          box-sizing: border-box;
+          .login-form-icons {
+            position: absolute;
+            height: 3rem;
+            margin-left: 1rem;
+          }
+          
+          input {
+            width: 100%;
+            height: 3rem;
+            border-radius: 1.5rem;
+            text-align: center;
+            outline: none;
+            border: none;
+            &::placeholder {
+              font-size: $font-size-small;
+            }
+          }
+        }
+      }
+  
+  
+      @keyframes white {
+        0%, 100% {
+          box-shadow: 0 0 2em hsl(231deg 62% 94%) }
+      
+        50% {
+          box-shadow: 0 0 2em hsl(231, 7%, 61%) } 
+        }
+    }
+  }
+  

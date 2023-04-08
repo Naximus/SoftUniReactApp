@@ -29,8 +29,11 @@ const ClientProfile = () => {
     const[currentName, setCurrentName] = useState(userName);
     const [editingName, setEditName] = useState(userName);
     // Avatar
-    const avatarImage = currentClient ? currentClient.image : null;
-    const [clientAvatar, setClientAvatar] = useState(avatarImage);
+    // const avatarImage = currentClient ? currentClient.image : null;
+    const [clientAvatar, setClientAvatar] = useState();
+    
+
+    
     const [isOpen, setIsOpen] = useState(false);
 
     // Error set
@@ -40,8 +43,8 @@ const ClientProfile = () => {
 
     // 
     const userId = useParams(":userId");
-    let clientId = userId.clientId;
-
+    // let clientId = userId.clientId;
+    let clientId = userId.clientId === undefined ? appUser._id : userId.clientId;
     // 
   
 
@@ -69,6 +72,10 @@ const ClientProfile = () => {
                 setError("User could not be authenticated");
                 setIsLoading(false);
             });
+        }else {
+          setEditName(currentClient.name);
+          setCurrentName(currentClient.name);
+          setClientAvatar(currentClient.image)
         }
     }, [currentClient, setCurrentUser, clientId, appToken]);
 
@@ -138,6 +145,11 @@ const ClientProfile = () => {
         setIsEditingName(false);
       }
       
+
+      
+
+      
+
     return(
         <>
         {isOpen && <AvatarPicker 

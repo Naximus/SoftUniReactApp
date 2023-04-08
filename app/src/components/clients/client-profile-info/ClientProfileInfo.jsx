@@ -34,13 +34,14 @@ const ClientProfileInfo = ({userRole}) => {
         ...editedInfo,
         [name]: value
       });
-      setEditedFields((prevFields) => [...prevFields, name]);
+      // setEditedFields((prevFields) => [...prevFields, name]);
+      setEditedFields([name]);
     };
   
     const handleSave = async () => {
 
       // Send only edited fields to the backend
-      if (isChaned) {
+      // if (isChaned) {
       
       const editedData = {};
       editedFields.forEach((field) => {
@@ -49,7 +50,7 @@ const ClientProfileInfo = ({userRole}) => {
        
         const [changedProperty, propertyValue] = Object.entries(editedData)[0];
         const reqProperty = changedProperty == "foodRegime" ? "food-regime" : changedProperty;
-     
+
       await fetch(`${BASE_URL}/clients/${clientId}/${reqProperty}`, {
         method: "PUT",
         headers: { "content-type": "application/json", "X-Authorization" :  appToken},
@@ -66,9 +67,16 @@ const ClientProfileInfo = ({userRole}) => {
             throw new Error(err)
           }
           else {
-            const newData = editedInfo;
-            setCurrentUser(newData);
+            // const newData = editedInfo;
+            setCurrentUser(editedInfo);
             setEditedInfo(editedInfo);
+
+            setIsPhoneEditing(false);
+            setIsEmailEditing(false);
+            setIsTargetEditing(false);
+            setIsNotesEditing(false);
+            setIsRegimeEditing(false);
+
             return res };
         })
         .catch((error) => {
@@ -85,12 +93,8 @@ const ClientProfileInfo = ({userRole}) => {
         });
 
       
-    }
-    setIsPhoneEditing(false);
-    setIsEmailEditing(false);
-    setIsTargetEditing(false);
-    setIsNotesEditing(false);
-    setIsRegimeEditing(false);
+    // }
+    
     };
   
     const handleCancel = () => {

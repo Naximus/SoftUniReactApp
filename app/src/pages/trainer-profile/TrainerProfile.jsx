@@ -29,16 +29,21 @@ const TrainerProfile = () => {
     const[currentName, setCurrentName] = useState(userName);
     const [editingName, setEditName] = useState(userName);
     // Avatar
-    const avatarImage = currentTrainer ? currentTrainer.image : null;
-    const [clientAvatar, setClientAvatar] = useState(avatarImage);
+    // const avatarImage = currentTrainer ? currentTrainer.image : null;
+    // const [clientAvatar, setClientAvatar] = useState(avatarImage);
+    
+    const [clientAvatar, setClientAvatar] = useState();
+    // const avatarImage = currentTrainer ? currentTrainer.image : null;
+
     const [isOpen, setIsOpen] = useState(false);
 
 
     // 
     const userId = useParams(":trainerId");
-    let trainertId = userId.trainerId;
+    let trainertId = userId.trainerId === undefined ? appUser._id : userId.trainerId;
 
     useEffect(() => {
+        
         if (!currentTrainer) {
             setIsLoading(true);
             fetch(`${BASE_URL}/trainers/${trainertId}`, {
@@ -62,6 +67,10 @@ const TrainerProfile = () => {
                 setError("User could not be authenticated");
                 setIsLoading(false);
             });
+        } else {
+          setEditName(currentTrainer.name);
+          setCurrentName(currentTrainer.name);
+          setClientAvatar(currentTrainer.image)
         }
     }, [currentTrainer, setCurrentTrenier, trainertId, appToken]);
 

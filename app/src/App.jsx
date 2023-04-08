@@ -79,7 +79,7 @@ function App() {
         <Route
           path="/client"
           element={
-            <ReqirePermission redirectTo="/client">
+            <ReqirePermission redirectTo="/login" allowedFor ={['client', 'trainer', 'manager', 'admin']}>
               <Dashboard appUser={appUser} />
             </ReqirePermission>
           }
@@ -87,7 +87,7 @@ function App() {
         <Route
           path="/trainer"
           element={
-            <ReqirePermission redirectTo="/trainer">
+            <ReqirePermission redirectTo="/login" allowedFor ={['client', 'trainer', 'manager', 'admin']}>
               <Dashboard appUser={appUser} />
             </ReqirePermission>
           }
@@ -95,29 +95,107 @@ function App() {
           <Route
           path="/manager"
           element={
-            <ReqirePermission redirectTo="/manager">
+            <ReqirePermission redirectTo="/login" allowedFor ={['manager', 'admin']}>
               <Dashboard appUser={appUser} />
             </ReqirePermission>
           }
         />
+        <Route
+          path="/manager/:manager"
+          element={
+            <ReqirePermission redirectTo="/login" allowedFor ={['manager', 'admin']}>
+              <ManagerProfile />
+            </ReqirePermission>
+          }
+        />
 
-        <Route path="manager/:manager" element={<ManagerProfile />}></Route>
+        {/* <Route path="manager/:manager" element={<ManagerProfile />}></Route> */}
+        <Route
+          path="/client/:clientId"
+          element={
+            <ReqirePermission redirectTo="/login" allowedFor ={['client', 'trainer', 'manager', 'admin']}>
+              <ClientProfile />
+            </ReqirePermission>
+          }
+        />
 
 
-        <Route path="client/:clientId" element={<ClientProfile />}></Route>
+        {/* <Route path="client/:clientId" element={<ClientProfile />}></Route> */}
+        <Route
+          path="/trainers-for-clients"
+          element={
+            <ReqirePermission redirectTo="/login" allowedFor ={['client', 'trainer', 'manager', 'admin']}>
+              <TrainersListForClients />
+            </ReqirePermission>
+          }
+        />
 
-        <Route path="/trainers-for-clients" element={<TrainersListForClients />} />
-        <Route path="/trainers" element={<Trainers />} />
-        <Route path="trainers/:trainerId" element={<TrainerProfile />}></Route>
+        {/* <Route path="/trainers-for-clients" element={<TrainersListForClients />} /> */}
+        <Route
+          path="/trainers"
+          element={
+            <ReqirePermission redirectTo="/login" allowedFor ={['client', 'trainer', 'manager', 'admin']}>
+              <Trainers />
+            </ReqirePermission>
+          }
+        />
+
+
+        {/* <Route path="/trainers" element={<Trainers />} /> */}
+
+        <Route
+          path="/trainers/:trainerId"
+          element={
+            <ReqirePermission redirectTo="/login" allowedFor ={[ 'trainer', 'manager', 'admin']}>
+              <TrainerProfile />
+            </ReqirePermission>
+          }
+        />
+
+        {/* <Route path="trainers/:trainerId" element={<TrainerProfile />}></Route> */}
     
         <Route path="/logout" element={<Logout onLogout={logoutHandler} />} />
-       
-        <Route path="create-manager" element={<CreateManager />} />
-        <Route path="create-trainer" element={<CreateTrainer />} />
-        <Route path="create-client" element={<CreateClient/>} />
+          
+        <Route
+          path="create-manager"
+          element={
+            <ReqirePermission redirectTo="/login" allowedFor ={['admin']}>
+              <CreateManager />
+            </ReqirePermission>
+          }
+        />
+        <Route
+          path="create-trainer"
+          element={
+            <ReqirePermission redirectTo="/login" allowedFor ={['trainer', 'manager','admin']}>
+              <CreateTrainer />
+            </ReqirePermission>
+          }
+        />
+        <Route
+          path="create-client"
+          element={
+            <ReqirePermission redirectTo="/login" allowedFor ={['trainer', 'manager','admin']}>
+              <CreateClient />
+            </ReqirePermission>
+          }
+        />
+
+        {/* <Route path="create-manager" element={<CreateManager />} /> */}
+        {/* <Route path="create-trainer" element={<CreateTrainer />} /> */}
+        {/* <Route path="create-client" element={<CreateClient/>} /> */}
+
+          {/* <Route path="clients" element={<Clients />}></Route> */}
+        <Route
+          path="/clients"
+          element={
+            <ReqirePermission redirectTo="/login" allowedFor ={['client', 'trainer', 'manager', 'admin']}>
+              <Clients />
+            </ReqirePermission>
+          }
+        />
 
 
-        <Route path="clients" element={<Clients />}></Route>
         <Route path="clients/:clientId" element={<ClientProfile />}></Route>
 
         <Route path="*" element={<NotFound status={404} />} />

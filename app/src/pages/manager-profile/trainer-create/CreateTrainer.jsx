@@ -2,10 +2,12 @@ import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { BASE_URL } from "../../../api/config";
 import { AppTokenContext } from "../../../contexts/AppTokenContext";
+import { TrainerContext } from "../../../contexts/TrainerContext";
 
 const CreateTrainer = () => {
   const navigate = useNavigate();
   const { appToken, setAppToken } = useContext(AppTokenContext)
+  const { currentTrainer, setCurrentTrenier  } = useContext(TrainerContext);
   const [values, setValues] = useState({
     name: "",
     username: "",
@@ -79,7 +81,9 @@ const CreateTrainer = () => {
           else return res;
         })
         .then((result) => {
-          navigate("/");
+          const id = result._id;
+          setCurrentTrenier(result);
+          navigate(`/trainers/${id}`);
         })
         .catch((error) => {
           setError(error.message);
